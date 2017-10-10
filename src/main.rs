@@ -1,4 +1,6 @@
 mod board;
+mod app_runner;
+mod output;
 
 fn main() {
 }
