@@ -1,13 +1,13 @@
-use std::io::{self, BufRead, Write, Cursor};
+use std::io::{self, BufRead, Cursor};
 use board::Board;
 use board::split_into_rows;
 use board::tests::set_up_board;
 
 pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
-const INPUT_MARKER: &str = "::: ";
 pub const NUMBER_OF_ROWS: &str = "Select 3 or 4 rows to play";
 pub const SELECT_A_SPACE: &str = ", select a space";
+pub const WINNER: &str = " wins the game!";
 
 pub fn display(output: &str) {
     println!("{}", output);
@@ -15,30 +15,46 @@ pub fn display(output: &str) {
 
 pub fn ask(question: &str) -> i32 {
     display(question);
-    get_input().trim().parse::<i32>().unwrap()
+    let input = get_input();
+    match input.trim().parse::<i32>() {
+    Ok(n) => n,
+    Err(e) => ask(question),
+    }
+}
+
+pub fn ask_how_many_rows() -> i32 {
+    let selection = ask(NUMBER_OF_ROWS);
+    if selection == 3 || selection == 4 {
+        selection
+    } else {
+        ask_how_many_rows()
+    }
 }
 
 fn get_input() -> String {
     let stdio = io::stdin();
     let input = stdio.lock();
-    let output = io::stdout();
-    let answer = process_input(input, output, INPUT_MARKER);
-    display(&answer);
+    let answer = process_input(input);
     answer
 }
 
-fn process_input<R, W>(mut reader: R, mut writer: W, query: &str) -> String
-where R: BufRead, W: Write {
-    write!(&mut writer, "{}", query).expect("Unable to write");
+fn process_input<R>(mut reader: R) -> String
+where R: BufRead {
     let mut input = String::new();
     reader.read_line(&mut input).expect("Unable to read");
     input
 }
 
-pub fn select_space(player: &str) -> String {
+pub fn select_space(player: String) -> String {
     let mut select: String = player.to_string();
     select += SELECT_A_SPACE;
     select
+}
+
+pub fn alert_winner(player: String) -> String {
+    let mut winner: String = player.to_string();
+    winner += WINNER;
+    winner
 }
 
 pub fn format_board(board: &Board) -> String {
@@ -96,19 +112,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn displays_input_marker() {
-        let input = Cursor::new(&b"3"[..]);
-        let mut output = Cursor::new(Vec::new());
-        process_input(input, &mut output, INPUT_MARKER);
-        let output = String::from_utf8(output.into_inner()).expect("Not UTF-8");
-        assert_eq!(INPUT_MARKER, output);
-    }
-
-    #[test]
     fn captures_user_input() {
         let input = Cursor::new(&b"3"[..]);
-        let mut output = Cursor::new(Vec::new());
-        let answer = process_input(input, &mut output, NUMBER_OF_ROWS);
+        let answer = process_input(input);
         assert_eq!("3", answer);
     }
 
@@ -171,7 +177,13 @@ mod tests {
 #[test]
     fn asks_user_to_play() {
         let turn: String = "X, select a space".to_string();
-        assert_eq!(turn, select_space("X"));
+        assert_eq!(turn, select_space("X".to_string()));
+    }
+
+#[test]
+    fn alerts_user_of_the_winner() {
+        let winner: String = "X wins the game!".to_string();
+        assert_eq!(winner, alert_winner("X".to_string()));
     }
 
 }

@@ -1,3 +1,5 @@
+const OFFSET: usize = 1;
+
 #[derive(Default)]
 pub struct Board {
     size: i32,
@@ -17,7 +19,7 @@ impl Board {
         &self.size
     }
 
-    fn get_spaces(&self) -> &Vec<i32> {
+    pub fn get_spaces(&self) -> &Vec<i32> {
         &self.spaces
     }
 
@@ -41,6 +43,11 @@ impl Board {
         let max_space = &self.size * &self.size;
         let min_space = 0;
         space >= &min_space && space < &max_space
+    }
+
+    pub fn get_available_spaces(&self) -> Vec<i32> {
+        let all_spaces = 0..self.size * self.size;
+        all_spaces.filter(|space| self.is_space_available(space)).collect()
     }
 
     fn create_new_board_with_move(self, space: i32) -> Board {
@@ -77,10 +84,35 @@ pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String
     rows
 }
 
+pub fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
+    let mut columns = rows.to_vec();
+    for (row_index, row) in rows.iter().enumerate() {
+        for (space_index, space) in row.iter().enumerate() {
+            columns[space_index][row_index] = space.to_string();
+        }
+    }
+    columns
+}
+
+pub fn find_left_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
+    let mut diagonal: Vec<String> = vec![" ".to_string(); rows.len()];
+    for (index, row) in rows.iter().enumerate() {
+        diagonal[index] = row[index].to_string();
+    }
+    diagonal
+}
+
+pub fn find_right_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
+    let mut diagonal: Vec<String> = vec![" ".to_string(); rows.len()];
+    for (index, row) in rows.iter().enumerate() {
+        diagonal[index] = row[rows.len() - (index + OFFSET)].to_string();
+    }
+    diagonal
+}
+
 pub mod tests {
     use super::*;
     #[cfg(test)]
-
     #[test]
     fn takes_a_number_of_rows() {
         let board = build_board(3);
@@ -130,6 +162,27 @@ pub mod tests {
     }
 
     #[test]
+    fn finds_available_spaces_in_empty_board() {
+        let board = set_up_board(3, vec![]);
+        let available_spaces = vec![0, 1, 2, 3, 4, 5, 6, 7, 8];
+        assert_eq!(available_spaces, board.get_available_spaces());
+    }
+
+    #[test]
+    fn finds_available_spaces_in_full_board() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
+        let available_spaces: Vec<i32> = vec![];
+        assert_eq!(available_spaces, board.get_available_spaces());
+    }
+
+    #[test]
+    fn finds_available_spaces_in_an_in_progress_board() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6]);
+        let available_spaces: Vec<i32> = vec![1, 3, 5, 7];
+        assert_eq!(available_spaces, board.get_available_spaces());
+    }
+
+    #[test]
     fn convert_empty_board() {
         let board = set_up_board(3, vec![]);
         let expanded_board: Vec<String> = vec![" ".to_string(), " ".to_string(), " ".to_string(), " ".to_string(),
@@ -175,6 +228,80 @@ pub mod tests {
         let expanded_board: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
         vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()]];
         assert_eq!(expanded_board, split_into_rows(board.expand_board(), 3));
+    }
+
+    #[test]
+    fn get_columns_empty() {
+        let rows: Vec<Vec<String>> = vec![vec![" ".to_string(), " ".to_string(), " ".to_string()],
+        vec![" ".to_string(), " ".to_string(), " ".to_string()], vec![" ".to_string(), " ".to_string(), " ".to_string()]];
+        assert_eq!(rows, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_columns_in_progress() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), "X".to_string()],
+        vec![" ".to_string(), "O".to_string(), " ".to_string()], vec![" ".to_string(), " ".to_string(), " ".to_string()]];
+        let columns: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), " ".to_string()],
+        vec![" ".to_string(), "O".to_string(), " ".to_string()], vec!["X".to_string(), " ".to_string(), " ".to_string()]];
+        assert_eq!(columns, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_columns_full() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
+        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()]];
+        let columns: Vec<Vec<String>> = vec![vec!["X".to_string(), "O".to_string(), "X".to_string()],
+        vec!["X".to_string(), "O".to_string(), "O".to_string()], vec!["O".to_string(), "X".to_string(), "X".to_string()]];
+        assert_eq!(columns, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_columns_4x4() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), "O".to_string(), " ".to_string()],
+        vec![" ".to_string(), " ".to_string(), " ".to_string(), "X".to_string()],
+        vec![" ".to_string(), "X".to_string(), " ".to_string(), " ".to_string()],
+        vec!["O".to_string(), " ".to_string(), " ".to_string(), "O".to_string()]];
+        let columns: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), " ".to_string(), "O".to_string()],
+        vec![" ".to_string(), " ".to_string(), "X".to_string(), " ".to_string()],
+        vec!["O".to_string(), " ".to_string(), " ".to_string(), " ".to_string()],
+        vec![" ".to_string(), "X".to_string(), " ".to_string(), "O".to_string()]];
+        assert_eq!(columns, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_left_diagonal_3x3() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
+        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()]];
+        let diagonal: Vec<String> = vec!["X".to_string(), "O".to_string(), "X".to_string()];
+        assert_eq!(diagonal, find_left_diagonal(&rows));
+    }
+
+    #[test]
+    fn get_left_diagonal_4x4() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), "O".to_string(), " ".to_string()],
+        vec![" ".to_string(), " ".to_string(), " ".to_string(), "X".to_string()],
+        vec![" ".to_string(), "X".to_string(), " ".to_string(), " ".to_string()],
+        vec!["O".to_string(), " ".to_string(), " ".to_string(), "O".to_string()]];
+        let diagonal: Vec<String> = vec!["X".to_string(), " ".to_string(), " ".to_string(), "O".to_string()];
+        assert_eq!(diagonal, find_left_diagonal(&rows));
+    }
+
+    #[test]
+    fn get_right_diagonal_3x3() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
+        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()]];
+        let diagonal: Vec<String> = vec!["O".to_string(), "O".to_string(), "X".to_string()];
+        assert_eq!(diagonal, find_right_diagonal(&rows));
+    }
+
+    #[test]
+    fn get_right_diagonal_4x4() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), "O".to_string(), " ".to_string()],
+        vec![" ".to_string(), " ".to_string(), " ".to_string(), "X".to_string()],
+        vec![" ".to_string(), "X".to_string(), " ".to_string(), " ".to_string()],
+        vec!["O".to_string(), " ".to_string(), " ".to_string(), "O".to_string()]];
+        let diagonal: Vec<String> = vec![" ".to_string(), " ".to_string(), "X".to_string(), "O".to_string()];
+        assert_eq!(diagonal, find_right_diagonal(&rows));
     }
 
     pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {

@@ -1,16 +1,36 @@
 use io::*;
 use board::*;
+use game::*;
+
 pub fn start() {
-    // clear_screen();
-    display(TITLE);
-    let number_of_rows = ask(NUMBER_OF_ROWS);
-    let mut board = build_board(number_of_rows);
-    display(&format_board(&board));
-    let space = prompt_for_space();
-    board = board.place_marker(space);
-    display(&format_board(&board));
+    let mut board = setup_board();
+    while !is_game_over(&board) {
+        board = single_turn(board);
+    }
+    end_of_game(board);
 }
 
-fn prompt_for_space() -> i32 {
-    ask(&select_space("X")) - OFFSET as i32
+fn setup_board() -> Board {
+    // clear_screen();
+    display(TITLE);
+    let number_of_rows = ask_how_many_rows();
+    build_board(number_of_rows)
 }
+
+fn single_turn(board: Board) -> Board {
+    display(&format_board(&board));
+    let space = prompt_for_space(&board);
+    board.place_marker(space)
+}
+
+fn end_of_game(board: Board) {
+    display(&format_board(&board));
+     display(&alert_winner(find_winner(&board))); 
+}
+
+fn prompt_for_space(board: &Board) -> i32 {
+    let current_player: String = find_current_player(board);
+    ask(&select_space(current_player)) - OFFSET as i32
+}
+
+
