@@ -69,6 +69,10 @@ impl Board {
     }
 }
 
+fn is_game_tied(board: &Board) -> bool {
+    !is_game_won(&board) && board.spaces.len() as i32 == board.size * board.size
+}
+
 fn is_game_won(board: &Board) -> bool {
     is_game_won_by(&board, "X") || is_game_won_by(&board, "O")
 }
@@ -337,6 +341,30 @@ pub mod tests {
     fn an_empty_game_is_not_won() {
         let board = set_up_board(3, vec![]);
         assert!(!is_game_won(&board));
+    }
+
+    #[test]
+    fn an_empty_game_is_not_tied() {
+        let board = set_up_board(3, vec![]);
+        assert!(!is_game_tied(&board));
+    }
+
+    #[test]
+    fn a_won_game_is_not_tied() {
+        let board = set_up_board(3, vec![0, 8, 4, 7, 2, 6]);
+        assert!(!is_game_tied(&board));
+    }
+
+    #[test]
+    fn a_won_game_with_a_full_board_is_not_tied() {
+        let board = set_up_board(3, vec![0, 3, 1, 4, 6, 7, 5, 8, 2]);
+        assert!(!is_game_tied(&board));
+    }
+
+    #[test]
+    fn a_tied_game_is_tied() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
+        assert!(is_game_tied(&board));
     }
 
     #[test]
