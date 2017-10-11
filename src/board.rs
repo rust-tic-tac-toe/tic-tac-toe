@@ -45,7 +45,7 @@ impl Board {
         space >= &min_space && space < &max_space
     }
 
-    fn get_available_spaces(&self) -> Vec<i32> {
+    pub fn get_available_spaces(&self) -> Vec<i32> {
         let all_spaces = 0..self.size * self.size;
         all_spaces.filter(|space| self.is_space_available(space)).collect()
     }
@@ -74,36 +74,6 @@ impl Board {
     }
 }
 
-fn is_game_tied(board: &Board) -> bool {
-    !is_game_won(&board) && board.get_available_spaces().len() == 0
-}
-
-fn is_game_won(board: &Board) -> bool {
-    is_game_won_by(&board, "X") || is_game_won_by(&board, "O")
-}
-
-fn is_game_won_by(board: &Board, player: &str) -> bool {
-    let winning_scenarios = find_winning_scenarios(&board);
-    winning_scenarios.iter().any(|line| is_line_won_by(line, &player))
-}
-
-fn is_line_won_by(line: &Vec<String>, player: &str) -> bool {
-    line.iter().all(|space| space == player)
-}
-
-fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
-    let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
-    let mut rows = split_into_rows(board.expand_board(), board.size);
-    let mut columns = find_columns(&rows);
-    let left = find_left_diagonal(&rows);
-    let right = find_right_diagonal(&rows);
-    winning_scenarios.append(&mut rows);
-    winning_scenarios.append(&mut columns);
-    winning_scenarios.push(left);
-    winning_scenarios.push(right);
-    winning_scenarios
-}
-
 pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String>> {
     let chunks = expanded_board.chunks(size as usize);
     let mut rows: Vec<Vec<String>> = Vec::new();
@@ -114,7 +84,7 @@ pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String
     rows
 }
 
-fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
+pub fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
     let mut columns = rows.to_vec();
     for (row_index, row) in rows.iter().enumerate() {
         for (space_index, space) in row.iter().enumerate() {
@@ -124,7 +94,7 @@ fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
     columns
 }
 
-fn find_left_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
+pub fn find_left_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
     let mut diagonal: Vec<String> = vec![" ".to_string(); rows.len()];
     for (index, row) in rows.iter().enumerate() {
         diagonal[index] = row[index].to_string();
@@ -132,7 +102,7 @@ fn find_left_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
     diagonal
 }
 
-fn find_right_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
+pub fn find_right_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
     let mut diagonal: Vec<String> = vec![" ".to_string(); rows.len()];
     for (index, row) in rows.iter().enumerate() {
         diagonal[index] = row[rows.len() - (index + OFFSET)].to_string();
@@ -332,77 +302,6 @@ pub mod tests {
         vec!["O".to_string(), " ".to_string(), " ".to_string(), "O".to_string()]];
         let diagonal: Vec<String> = vec![" ".to_string(), " ".to_string(), "X".to_string(), "O".to_string()];
         assert_eq!(diagonal, find_right_diagonal(&rows));
-    }
-
-    #[test]
-    fn finds_winning_scenarios() {
-        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        let winning_scenarios: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
-        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
-        vec!["X".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "O".to_string()],
-        vec!["O".to_string(), "X".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
-        vec!["O".to_string(), "O".to_string(), "X".to_string()]];
-        assert_eq!(winning_scenarios, find_winning_scenarios(&board));
-    }
-
-    #[test]
-    fn check_if_tied_game_is_won() {
-        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        assert!(!is_game_won(&board));
-    }
-
-    #[test]
-    fn check_if_game_won_by_x_is_won() {
-        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 3, 7]);
-        assert!(is_game_won(&board));
-    }
-
-    #[test]
-    fn check_if_game_won_by_o_is_won() {
-        let board = set_up_board(3, vec![0, 8, 4, 7, 2, 6]);
-        assert!(is_game_won(&board));
-    }
-
-    #[test]
-    fn an_empty_game_is_not_won() {
-        let board = set_up_board(3, vec![]);
-        assert!(!is_game_won(&board));
-    }
-
-    #[test]
-    fn an_empty_game_is_not_tied() {
-        let board = set_up_board(3, vec![]);
-        assert!(!is_game_tied(&board));
-    }
-
-    #[test]
-    fn a_won_game_is_not_tied() {
-        let board = set_up_board(3, vec![0, 8, 4, 7, 2, 6]);
-        assert!(!is_game_tied(&board));
-    }
-
-    #[test]
-    fn a_won_game_with_a_full_board_is_not_tied() {
-        let board = set_up_board(3, vec![0, 3, 1, 4, 6, 7, 5, 8, 2]);
-        assert!(!is_game_tied(&board));
-    }
-
-    #[test]
-    fn a_tied_game_is_tied() {
-        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        assert!(is_game_tied(&board));
-    }
-
-    #[test]
-    fn check_line_won_by_x() {
-        let line: Vec<String> = vec!["X".to_string(), "X".to_string(), "X".to_string()];
-        assert!(is_line_won_by(&line, "X"));
-    }
-
-    #[test]
-    fn check_row_not_won_by_o() {
-        let line: Vec<String> = vec!["O".to_string(), " ".to_string(), "X".to_string()];
-        assert!(!is_line_won_by(&line, "O"));
     }
 
     pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
