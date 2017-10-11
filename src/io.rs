@@ -2,6 +2,7 @@ use std::io::{self, BufRead, Write, Cursor};
 use board::Board;
 use board::split_into_rows;
 use board::tests::set_up_board;
+use game::find_current_player;
 
 pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
@@ -35,7 +36,7 @@ where R: BufRead, W: Write {
     input
 }
 
-pub fn select_space(player: &str) -> String {
+pub fn select_space(player: String) -> String {
     let mut select: String = player.to_string();
     select += SELECT_A_SPACE;
     select
@@ -171,7 +172,7 @@ mod tests {
 #[test]
     fn asks_user_to_play() {
         let turn: String = "X, select a space".to_string();
-        assert_eq!(turn, select_space("X"));
+        assert_eq!(turn, select_space("X".to_string()));
     }
 
 }

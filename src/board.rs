@@ -17,7 +17,7 @@ impl Board {
         &self.size
     }
 
-    fn get_spaces(&self) -> &Vec<i32> {
+    pub fn get_spaces(&self) -> &Vec<i32> {
         &self.spaces
     }
 
@@ -80,7 +80,6 @@ pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String
 pub mod tests {
     use super::*;
     #[cfg(test)]
-
     #[test]
     fn takes_a_number_of_rows() {
         let board = build_board(3);
@@ -177,7 +176,7 @@ pub mod tests {
         assert_eq!(expanded_board, split_into_rows(board.expand_board(), 3));
     }
 
-    pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
+   pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
         let mut board: Board = build_board(size);
         for space in spaces {
             board = board.place_marker(space);
