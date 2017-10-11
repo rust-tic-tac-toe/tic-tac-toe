@@ -13,7 +13,7 @@ pub fn start() {
 fn setup_board() -> Board {
     // clear_screen();
     display(TITLE);
-    let number_of_rows = ask(NUMBER_OF_ROWS);
+    let number_of_rows = ask_how_many_rows();
     build_board(number_of_rows)
 }
 
