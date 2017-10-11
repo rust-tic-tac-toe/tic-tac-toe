@@ -8,6 +8,7 @@ pub const TITLE: &str = "Tic Tac Toe";
 const INPUT_MARKER: &str = "::: ";
 pub const NUMBER_OF_ROWS: &str = "Select 3 or 4 rows to play";
 pub const SELECT_A_SPACE: &str = ", select a space";
+pub const WINNER: &str = " wins the game!";
 
 pub fn display(output: &str) {
     println!("{}", output);
@@ -39,6 +40,12 @@ pub fn select_space(player: String) -> String {
     let mut select: String = player.to_string();
     select += SELECT_A_SPACE;
     select
+}
+
+pub fn alert_winner(player: String) -> String {
+    let mut winner: String = player.to_string();
+    winner += WINNER;
+    winner
 }
 
 pub fn format_board(board: &Board) -> String {
@@ -172,6 +179,12 @@ mod tests {
     fn asks_user_to_play() {
         let turn: String = "X, select a space".to_string();
         assert_eq!(turn, select_space("X".to_string()));
+    }
+
+#[test]
+    fn alerts_user_of_the_winner() {
+        let winner: String = "X wins the game!".to_string();
+        assert_eq!(winner, alert_winner("X".to_string()));
     }
 
 }

@@ -12,8 +12,7 @@ pub fn find_current_player(board: &Board) -> String {
 }
 
 pub fn is_game_over(board: &Board) -> bool {
-    let max_spaces: i32 = board.get_size() * board.get_size();
-    board.get_spaces().len() as i32 == max_spaces
+    is_game_tied(&board) || is_game_won(&board)
 }
 
 fn is_game_tied(board: &Board) -> bool {
@@ -44,6 +43,16 @@ fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
     winning_scenarios.push(left);
     winning_scenarios.push(right);
     winning_scenarios
+}
+
+pub fn find_winner(board: &Board) -> String {
+    if is_game_won_by(&board, "X") {
+        "X".to_string()
+    } else if is_game_won_by(&board, "O") {
+        "O".to_string()
+    } else {
+        "Nobody".to_string()
+    }
 }
 
 pub mod tests {
@@ -142,6 +151,24 @@ pub mod tests {
     fn check_row_not_won_by_o() {
         let line: Vec<String> = vec!["O".to_string(), " ".to_string(), "X".to_string()];
         assert!(!is_line_won_by(&line, "O"));
+    }
+
+    #[test]
+    fn find_winner_when_nobody_has_won() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
+        assert_eq!("Nobody".to_string(), find_winner(&board));
+    }
+
+    #[test]
+    fn find_winner_when_x_has_won() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 3, 7]);
+        assert_eq!("X".to_string(), find_winner(&board));
+    }
+
+    #[test]
+    fn find_winner_when_o_has_won() {
+        let board = set_up_board(3, vec![0, 8, 4, 7, 2, 6]);
+        assert_eq!("O".to_string(), find_winner(&board));
     }
 }
 

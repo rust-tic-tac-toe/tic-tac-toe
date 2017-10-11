@@ -7,7 +7,7 @@ pub fn start() {
     while !is_game_over(&board) {
         board = single_turn(board);
     }
-    display(&format_board(&board));
+    end_of_game(board);
 }
 
 fn setup_board() -> Board {
@@ -21,6 +21,11 @@ fn single_turn(board: Board) -> Board {
     display(&format_board(&board));
     let space = prompt_for_space(&board);
     board.place_marker(space)
+}
+
+fn end_of_game(board: Board) {
+    display(&format_board(&board));
+     display(&alert_winner(find_winner(&board))); 
 }
 
 fn prompt_for_space(board: &Board) -> i32 {
