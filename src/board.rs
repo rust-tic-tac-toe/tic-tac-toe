@@ -21,7 +21,7 @@ impl Board {
         &self.spaces
     }
 
-    fn place_marker(self, space: i32) -> Board {
+    pub fn place_marker(self, space: i32) -> Board {
         if self.is_move_valid(&space) {
             self.create_new_board_with_move(space)
         } else {
@@ -77,9 +77,9 @@ pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String
     rows
 }
 
-#[cfg(test)]
 pub mod tests {
     use super::*;
+    #[cfg(test)]
 
     #[test]
     fn takes_a_number_of_rows() {

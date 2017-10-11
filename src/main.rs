@@ -1,8 +1,11 @@
 mod board;
 mod app_runner;
-mod output;
+mod io;
+
+use app_runner::start;
 
 fn main() {
+    start();
 }
 
 #[cfg(test)]
