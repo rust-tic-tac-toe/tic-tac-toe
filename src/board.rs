@@ -70,16 +70,16 @@ impl Board {
 }
 
 fn is_game_won(board: &Board) -> bool {
-    false
+    is_game_won_by(&board, "X") || is_game_won_by(&board, "O")
 }
 
-fn is_game_won_by(board: &Board, player: String) -> bool {
+fn is_game_won_by(board: &Board, player: &str) -> bool {
     let winning_scenarios = find_winning_scenarios(&board);
- true
+    winning_scenarios.iter().any(|line| is_line_won_by(line, &player))
 }
 
-fn is_line_won_by(line: &Vec<String>, player: String) -> bool {
-    line.iter().all(|space| space == &player)
+fn is_line_won_by(line: &Vec<String>, player: &str) -> bool {
+    line.iter().all(|space| space == player)
 }
 
 fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
@@ -321,17 +321,34 @@ pub mod tests {
         assert!(!is_game_won(&board));
     }
 
+    #[test]
+    fn check_if_game_won_by_x_is_won() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 3, 7]);
+        assert!(is_game_won(&board));
+    }
+
+    #[test]
+    fn check_if_game_won_by_o_is_won() {
+        let board = set_up_board(3, vec![0, 8, 4, 7, 2, 6]);
+        assert!(is_game_won(&board));
+    }
+
+    #[test]
+    fn an_empty_game_is_not_won() {
+        let board = set_up_board(3, vec![]);
+        assert!(!is_game_won(&board));
+    }
 
     #[test]
     fn check_line_won_by_x() {
         let line: Vec<String> = vec!["X".to_string(), "X".to_string(), "X".to_string()];
-        assert!(is_line_won_by(&line, "X".to_string()));
+        assert!(is_line_won_by(&line, "X"));
     }
 
     #[test]
     fn check_row_not_won_by_o() {
         let line: Vec<String> = vec!["O".to_string(), " ".to_string(), "X".to_string()];
-        assert!(!is_line_won_by(&line, "O".to_string()));
+        assert!(!is_line_won_by(&line, "O"));
     }
 
     pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
