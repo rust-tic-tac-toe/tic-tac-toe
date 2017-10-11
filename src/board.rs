@@ -69,6 +69,19 @@ impl Board {
     }
 }
 
+fn is_game_won(board: &Board) -> bool {
+    false
+}
+
+fn is_game_won_by(board: &Board, player: String) -> bool {
+    let winning_scenarios = find_winning_scenarios(&board);
+ true
+}
+
+fn is_line_won_by(line: &Vec<String>, player: String) -> bool {
+    line.iter().all(|space| space == &player)
+}
+
 fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
     let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
     let mut rows = split_into_rows(board.expand_board(), board.size);
@@ -300,6 +313,25 @@ pub mod tests {
         vec!["O".to_string(), "X".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
         vec!["O".to_string(), "O".to_string(), "X".to_string()]];
         assert_eq!(winning_scenarios, find_winning_scenarios(&board));
+    }
+
+    #[test]
+    fn check_if_tied_game_is_won() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
+        assert!(!is_game_won(&board));
+    }
+
+
+    #[test]
+    fn check_line_won_by_x() {
+        let line: Vec<String> = vec!["X".to_string(), "X".to_string(), "X".to_string()];
+        assert!(is_line_won_by(&line, "X".to_string()));
+    }
+
+    #[test]
+    fn check_row_not_won_by_o() {
+        let line: Vec<String> = vec!["O".to_string(), " ".to_string(), "X".to_string()];
+        assert!(!is_line_won_by(&line, "O".to_string()));
     }
 
     pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
