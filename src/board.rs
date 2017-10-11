@@ -69,6 +69,19 @@ impl Board {
     }
 }
 
+fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
+    let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
+    let mut rows = split_into_rows(board.expand_board(), board.size);
+    let mut columns = find_columns(&rows);
+    let left = find_left_diagonal(&rows);
+    let right = find_right_diagonal(&rows);
+    winning_scenarios.append(&mut rows);
+    winning_scenarios.append(&mut columns);
+    winning_scenarios.push(left);
+    winning_scenarios.push(right);
+    winning_scenarios
+}
+
 pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String>> {
     let chunks = expanded_board.chunks(size as usize);
     let mut rows: Vec<Vec<String>> = Vec::new();
@@ -276,6 +289,17 @@ pub mod tests {
         vec!["O".to_string(), " ".to_string(), " ".to_string(), "O".to_string()]];
         let diagonal: Vec<String> = vec![" ".to_string(), " ".to_string(), "X".to_string(), "O".to_string()];
         assert_eq!(diagonal, find_right_diagonal(&rows));
+    }
+
+    #[test]
+    fn finds_winning_scenarios() {
+        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
+        let winning_scenarios: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
+        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
+        vec!["X".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "O".to_string()],
+        vec!["O".to_string(), "X".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
+        vec!["O".to_string(), "O".to_string(), "X".to_string()]];
+        assert_eq!(winning_scenarios, find_winning_scenarios(&board));
     }
 
     pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
