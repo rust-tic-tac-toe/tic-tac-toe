@@ -77,6 +77,16 @@ pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String
     rows
 }
 
+fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
+    let mut columns = rows.to_vec();
+    for (row_index, row) in rows.iter().enumerate() {
+        for (space_index, space) in row.iter().enumerate() {
+            columns[space_index][row_index] = space.to_string();
+        }
+    }
+    columns
+}
+
 pub mod tests {
     use super::*;
     #[cfg(test)]
@@ -176,7 +186,45 @@ pub mod tests {
         assert_eq!(expanded_board, split_into_rows(board.expand_board(), 3));
     }
 
-   pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
+    #[test]
+    fn get_columns_empty() {
+        let rows: Vec<Vec<String>> = vec![vec![" ".to_string(), " ".to_string(), " ".to_string()],
+        vec![" ".to_string(), " ".to_string(), " ".to_string()], vec![" ".to_string(), " ".to_string(), " ".to_string()]];
+        assert_eq!(rows, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_columns_in_progress() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), "X".to_string()],
+        vec![" ".to_string(), "O".to_string(), " ".to_string()], vec![" ".to_string(), " ".to_string(), " ".to_string()]];
+        let columns: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), " ".to_string()],
+        vec![" ".to_string(), "O".to_string(), " ".to_string()], vec!["X".to_string(), " ".to_string(), " ".to_string()]];
+        assert_eq!(columns, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_columns_full() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
+        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()]];
+        let columns: Vec<Vec<String>> = vec![vec!["X".to_string(), "O".to_string(), "X".to_string()], 
+        vec!["X".to_string(), "O".to_string(), "O".to_string()], vec!["O".to_string(), "X".to_string(), "X".to_string()]];
+        assert_eq!(columns, find_columns(&rows));
+    }
+
+    #[test]
+    fn get_columns_4x4() {
+        let rows: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), "O".to_string(), " ".to_string()],
+        vec![" ".to_string(), " ".to_string(), " ".to_string(), "X".to_string()],
+        vec![" ".to_string(), "X".to_string(), " ".to_string(), " ".to_string()],
+        vec!["O".to_string(), " ".to_string(), " ".to_string(), "O".to_string()]];
+        let columns: Vec<Vec<String>> = vec![vec!["X".to_string(), " ".to_string(), " ".to_string(), "O".to_string()],
+        vec![" ".to_string(), " ".to_string(), "X".to_string(), " ".to_string()],
+        vec!["O".to_string(), " ".to_string(), " ".to_string(), " ".to_string()],
+        vec![" ".to_string(), "X".to_string(), " ".to_string(), "O".to_string()]];
+        assert_eq!(columns, find_columns(&rows));
+    }
+
+    pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
         let mut board: Board = build_board(size);
         for space in spaces {
             board = board.place_marker(space);
