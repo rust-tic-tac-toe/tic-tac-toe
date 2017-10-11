@@ -4,7 +4,9 @@ use game::*;
 
 pub fn start() {
     let mut board = setup_board();
-    board = single_turn(board);
+    while !is_game_over(&board) {
+        board = single_turn(board);
+    }
     display(&format_board(&board));
 }
 

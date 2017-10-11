@@ -2,7 +2,6 @@ use std::io::{self, BufRead, Write, Cursor};
 use board::Board;
 use board::split_into_rows;
 use board::tests::set_up_board;
-use game::find_current_player;
 
 pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
