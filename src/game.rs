@@ -1,5 +1,4 @@
 use board::*;
-use board::tests::set_up_board;
 
 pub fn find_current_player(board: &Board) -> String {
     let current_player = if board.get_spaces().len() % 2 == 0 {
@@ -35,7 +34,7 @@ fn is_line_won_by(line: &[String], player: &str) -> bool {
 
 fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
     let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
-    let mut rows = split_into_rows(board.expand_board(), board.get_size().abs());
+    let mut rows = split_into_rows(&board.expand_board(), board.get_size().abs());
     let mut columns = find_columns(&rows);
     let left = find_left_diagonal(&rows);
     let right = find_right_diagonal(&rows);
@@ -57,8 +56,10 @@ pub fn find_winner(board: &Board) -> String {
 }
 
 pub mod tests {
+    #[cfg(test)]
     use super::*;
     #[cfg(test)]
+    use board::tests::set_up_board;
     #[test]
     fn x_is_current_player_at_start_of_game() {
         let board: Board = set_up_board(3, vec![]);
