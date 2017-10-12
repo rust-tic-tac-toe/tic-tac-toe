@@ -39,7 +39,7 @@ impl Board {
     }
 
     fn is_space_in_bounds(&self, space: &i32) -> bool {
-        let max_space = &self.size * &self.size;
+        let max_space = self.size * self.size;
         let min_space = 0;
         space >= &min_space && space < &max_space
     }
@@ -75,7 +75,7 @@ impl Board {
     }
 }
 
-pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String>> {
+pub fn split_into_rows(expanded_board: &[String], size: i32) -> Vec<Vec<String>> {
     let chunks = expanded_board.chunks(size as usize);
     let mut rows: Vec<Vec<String>> = Vec::new();
     for chunk in chunks {
@@ -85,7 +85,7 @@ pub fn split_into_rows(expanded_board: Vec<String>, size: i32) -> Vec<Vec<String
     rows
 }
 
-pub fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
+pub fn find_columns(rows: &[Vec<String>]) -> Vec<Vec<String>> {
     let mut columns = rows.to_vec();
     for (row_index, row) in rows.iter().enumerate() {
         for (space_index, space) in row.iter().enumerate() {
@@ -95,7 +95,7 @@ pub fn find_columns(rows: &Vec<Vec<String>>) -> Vec<Vec<String>> {
     columns
 }
 
-pub fn find_left_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
+pub fn find_left_diagonal(rows: &[Vec<String>]) -> Vec<String> {
     let mut diagonal: Vec<String> = vec![" ".to_string(); rows.len()];
     for (index, row) in rows.iter().enumerate() {
         diagonal[index] = row[index].to_string();
@@ -103,7 +103,7 @@ pub fn find_left_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
     diagonal
 }
 
-pub fn find_right_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
+pub fn find_right_diagonal(rows: &[Vec<String>]) -> Vec<String> {
     let mut diagonal: Vec<String> = vec![" ".to_string(); rows.len()];
     for (index, row) in rows.iter().enumerate() {
         diagonal[index] = row[rows.len() - (index + OFFSET)].to_string();
@@ -112,8 +112,8 @@ pub fn find_right_diagonal(rows: &Vec<Vec<String>>) -> Vec<String> {
 }
 
 pub mod tests {
-    use super::*;
     #[cfg(test)]
+    use super::*;
     #[test]
     fn takes_a_number_of_rows() {
         let board = build_board(3);
@@ -242,7 +242,7 @@ pub mod tests {
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-        assert_eq!(expanded_board, split_into_rows(board.expand_board(), 3));
+        assert_eq!(expanded_board, split_into_rows(&board.expand_board(), 3));
     }
 
     #[test]
@@ -253,7 +253,7 @@ pub mod tests {
             vec![" ".to_string(), "O".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-        assert_eq!(expanded_board, split_into_rows(board.expand_board(), 3));
+        assert_eq!(expanded_board, split_into_rows(&board.expand_board(), 3));
     }
 
     #[test]
@@ -264,7 +264,7 @@ pub mod tests {
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
-        assert_eq!(expanded_board, split_into_rows(board.expand_board(), 3));
+        assert_eq!(expanded_board, split_into_rows(&board.expand_board(), 3));
     }
 
     #[test]
@@ -460,6 +460,7 @@ pub mod tests {
         assert_eq!(diagonal, find_right_diagonal(&rows));
     }
 
+    #[cfg(test)]
     pub fn set_up_board(size: i32, spaces: Vec<i32>) -> Board {
         let mut board: Board = build_board(size);
         for space in spaces {
