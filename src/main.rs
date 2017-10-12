@@ -8,4 +8,3 @@ use app_runner::start;
 fn main() {
     start();
 }
-

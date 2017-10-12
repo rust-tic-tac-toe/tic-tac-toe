@@ -17,8 +17,8 @@ pub fn ask(question: &str) -> i32 {
     display(question);
     let input = get_input();
     match input.trim().parse::<i32>() {
-    Ok(n) => n,
-    Err(e) => ask(question),
+        Ok(n) => n,
+        Err(e) => ask(question),
     }
 }
 
@@ -39,7 +39,9 @@ fn get_input() -> String {
 }
 
 fn process_input<R>(mut reader: R) -> String
-where R: BufRead {
+where
+    R: BufRead,
+{
     let mut input = String::new();
     reader.read_line(&mut input).expect("Unable to read");
     input
@@ -123,64 +125,93 @@ mod tests {
         assert_eq!("Tic Tac Toe", TITLE);
     }
 
-#[test]
+    #[test]
     fn displays_an_empty_3_by_3_board() {
         let board: Board = set_up_board(3, vec![]);
         let blank_board: String =
-            " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n".to_string();
+            " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n"
+                .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
-#[test]
+    #[test]
     fn displays_a_full_3_by_3_board() {
         let board: Board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
         let blank_board: String =
-            " X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n".to_string();
+            " X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n"
+                .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
-#[test]
+    #[test]
     fn displays_an_empty_4_by_4_board() {
         let board: Board = set_up_board(4, vec![]);
         let blank_board: String =
             " 1  | 2  | 3  | 4  \n-------------------\n 5  | 6  | 7  | 8  \n-------------------\n \
-           9  | 10 | 11 | 12 \n-------------------\n 13 | 14 | 15 | 16 \n".to_string();
+             9  | 10 | 11 | 12 \n-------------------\n 13 | 14 | 15 | 16 \n"
+                .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
-#[test]
+    #[test]
     fn displays_a_full_4_by_4_board() {
-        let board: Board = set_up_board(4, vec![0, 15, 1, 14, 2, 3, 7, 13, 12, 4, 5, 6, 8, 9, 10, 11]);
+        let board: Board = set_up_board(
+            4,
+            vec![0, 15, 1, 14, 2, 3, 7, 13, 12, 4, 5, 6, 8, 9, 10, 11],
+        );
         let blank_board: String =
             " X  | X  | X  | O  \n-------------------\n O  | X  | O  | X  \n-------------------\n \
-           X  | O  | X  | O  \n-------------------\n X  | O  | O  | O  \n".to_string();
+             X  | O  | X  | O  \n-------------------\n X  | O  | O  | O  \n"
+                .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
-#[test]
+    #[test]
     fn formats_a_row() {
-        let row: String =
-            " 1  | 2  | 3  \n".to_string();
-        assert_eq!(row, format_row(vec!["1".to_string(), "2".to_string(), "3".to_string()]));
+        let row: String = " 1  | 2  | 3  \n".to_string();
+        assert_eq!(
+            row,
+            format_row(vec!["1".to_string(), "2".to_string(), "3".to_string()])
+        );
     }
 
-#[test]
+    #[test]
     fn formats_numbers() {
-        let numbered_spaces: Vec<String> =
-            vec!["1".to_string(), "2".to_string(), "3".to_string(), "4".to_string(),
-            "5".to_string(), "6".to_string(), "7".to_string(), "8".to_string(), "9".to_string()];
-        assert_eq!(numbered_spaces, number_spaces(vec![" ".to_string(), " ".to_string(), " ".to_string(),
-        " ".to_string(), " ".to_string(), " ".to_string(), " ".to_string(), " ".to_string(), " ".to_string()]));
+        let numbered_spaces: Vec<String> = vec![
+            "1".to_string(),
+            "2".to_string(),
+            "3".to_string(),
+            "4".to_string(),
+            "5".to_string(),
+            "6".to_string(),
+            "7".to_string(),
+            "8".to_string(),
+            "9".to_string(),
+        ];
+        assert_eq!(
+            numbered_spaces,
+            number_spaces(vec![
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+            ])
+        );
     }
 
 
-#[test]
+    #[test]
     fn asks_user_to_play() {
         let turn: String = "X, select a space".to_string();
         assert_eq!(turn, select_space("X".to_string()));
     }
 
-#[test]
+    #[test]
     fn alerts_user_of_the_winner() {
         let winner: String = "X wins the game!".to_string();
         assert_eq!(winner, alert_winner("X".to_string()));

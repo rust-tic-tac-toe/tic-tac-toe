@@ -25,12 +25,10 @@ fn single_turn(board: Board) -> Board {
 
 fn end_of_game(board: Board) {
     display(&format_board(&board));
-     display(&alert_winner(find_winner(&board))); 
+    display(&alert_winner(find_winner(&board)));
 }
 
 fn prompt_for_space(board: &Board) -> i32 {
     let current_player: String = find_current_player(board);
     ask(&select_space(current_player)) - OFFSET as i32
 }
-
-

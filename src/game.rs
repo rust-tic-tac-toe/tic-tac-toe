@@ -25,7 +25,9 @@ fn is_game_won(board: &Board) -> bool {
 
 fn is_game_won_by(board: &Board, player: &str) -> bool {
     let winning_scenarios = find_winning_scenarios(&board);
-    winning_scenarios.iter().any(|line| is_line_won_by(line, &player))
+    winning_scenarios
+        .iter()
+        .any(|line| is_line_won_by(line, &player))
 }
 
 fn is_line_won_by(line: &Vec<String>, player: &str) -> bool {
@@ -85,11 +87,16 @@ pub mod tests {
     #[test]
     fn finds_winning_scenarios() {
         let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        let winning_scenarios: Vec<Vec<String>> = vec![vec!["X".to_string(), "X".to_string(), "O".to_string()],
-        vec!["O".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
-        vec!["X".to_string(), "O".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "O".to_string()],
-        vec!["O".to_string(), "X".to_string(), "X".to_string()], vec!["X".to_string(), "O".to_string(), "X".to_string()],
-        vec!["O".to_string(), "O".to_string(), "X".to_string()]];
+        let winning_scenarios: Vec<Vec<String>> = vec![
+            vec!["X".to_string(), "X".to_string(), "O".to_string()],
+            vec!["O".to_string(), "O".to_string(), "X".to_string()],
+            vec!["X".to_string(), "O".to_string(), "X".to_string()],
+            vec!["X".to_string(), "O".to_string(), "X".to_string()],
+            vec!["X".to_string(), "O".to_string(), "O".to_string()],
+            vec!["O".to_string(), "X".to_string(), "X".to_string()],
+            vec!["X".to_string(), "O".to_string(), "X".to_string()],
+            vec!["O".to_string(), "O".to_string(), "X".to_string()],
+        ];
         assert_eq!(winning_scenarios, find_winning_scenarios(&board));
     }
 
@@ -171,4 +178,3 @@ pub mod tests {
         assert_eq!("O".to_string(), find_winner(&board));
     }
 }
-
