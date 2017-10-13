@@ -1,6 +1,6 @@
 const OFFSET: usize = 1;
 
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub struct Board {
     size: i32,
     spaces: Vec<i32>,

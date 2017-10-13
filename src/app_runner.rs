@@ -29,7 +29,8 @@ fn setup_players() -> Vec<Players> {
 
 fn single_turn(board: Board, players: &[Players]) -> Board {
     display(&format_board(&board));
-    let space = find_space(&board, players);
+    let cloned_board = board.clone();
+    let space = find_space(cloned_board, players);
     board.place_marker(space)
 }
 
@@ -38,12 +39,13 @@ fn end_of_game(board: &Board) {
     display(&alert_winner(&find_winner(board)));
 }
 
-fn find_space(board: &Board, players: &[Players]) -> i32 {
-    let current_player_marker: String = find_current_player(board);
+fn find_space(board: Board, players: &[Players]) -> i32 {
+    let current_player_marker: String = find_current_player(&board);
     let mut space: i32 = INVALID_VALUE;
     for player in players.iter() {
         if current_player_marker == get_marker(player) {
-            space = choose_space(player, board)
+            let cloned_board = board.clone();
+            space = choose_space(player, cloned_board)
         }
     }
     space
