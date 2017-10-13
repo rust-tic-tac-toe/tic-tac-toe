@@ -1,5 +1,6 @@
 use board::*;
 use io::*;
+use computer::*;
 
 pub enum Players {
     Human { marker: String },
@@ -12,10 +13,11 @@ pub fn get_marker(player: &Players) -> &str {
     }
 }
 
+#[allow(unused)]
 pub fn choose_space(player: &Players, board: &Board) -> i32 {
     match *player {
         Players::Human { ref marker } => ask(&select_space(marker)) - OFFSET as i32,
-        Players::Computer { ref marker } => 1,
+        Players::Computer { ref marker } => find_best_space(board),
     }
 }
 
@@ -28,5 +30,13 @@ pub mod tests {
             marker: "X".to_string(),
         };
         assert_eq!("X", get_marker(&player));
+    }
+
+    #[test]
+    fn creates_a_computer_player() {
+        let player = Players::Computer {
+            marker: "O".to_string(),
+        };
+        assert_eq!("O", get_marker(&player));
     }
 }

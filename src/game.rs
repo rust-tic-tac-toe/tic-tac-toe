@@ -13,7 +13,7 @@ pub fn is_game_over(board: &Board) -> bool {
     is_game_tied(board) || is_game_won(board)
 }
 
-fn is_game_tied(board: &Board) -> bool {
+pub fn is_game_tied(board: &Board) -> bool {
     !is_game_won(board) && board.get_available_spaces().is_empty()
 }
 
@@ -21,7 +21,7 @@ fn is_game_won(board: &Board) -> bool {
     is_game_won_by(board, "X") || is_game_won_by(board, "O")
 }
 
-fn is_game_won_by(board: &Board, player: &str) -> bool {
+pub fn is_game_won_by(board: &Board, player: &str) -> bool {
     let winning_scenarios = find_winning_scenarios(board);
     winning_scenarios
         .iter()

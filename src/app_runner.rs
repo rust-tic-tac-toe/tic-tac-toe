@@ -5,6 +5,7 @@ use players::*;
 use game_types::*;
 
 const INVALID_VALUE: i32 = -1;
+const NUMBER_OF_ROWS: i32 = 3;
 
 pub fn start() {
     let mut board = setup_board();
@@ -16,10 +17,9 @@ pub fn start() {
 }
 
 fn setup_board() -> Board {
-    // clear_screen();
+    clear_screen();
     display(TITLE);
-    let number_of_rows = ask_how_many_rows();
-    build_board(number_of_rows)
+    build_board(NUMBER_OF_ROWS)
 }
 
 fn setup_players() -> Vec<Players> {

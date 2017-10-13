@@ -4,6 +4,7 @@ mod board;
 mod game;
 mod players;
 mod game_types;
+mod computer;
 
 use app_runner::start;
 
