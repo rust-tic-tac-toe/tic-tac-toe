@@ -6,18 +6,26 @@ const INITIAL_DEPTH: i32 = 0;
 const TIED: i32 = 0;
 const MAX_SCORE: i32 = 1000;
 const INCREMENT: i32 = 1;
+const TOP_LEFT_CORNER: i32 = 0;
 
 pub fn find_best_space(board: Board) -> i32 {
-    minimax(board, INITIAL_DEPTH, HashMap::new())
+    if board.is_empty() {
+        TOP_LEFT_CORNER
+    } else {
+        minimax(board, INITIAL_DEPTH, HashMap::new())
+    }
 }
 
 fn minimax(board: Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 {
     if is_game_over(&board) {
-        return score_scenarios(&board, depth)
+        return score_scenarios(&board, depth);
     } else {
         for space in board.get_available_spaces().iter() {
             let emulated_board = board.clone().place_marker(*space);
-            best_score.insert(*space, - minimax(emulated_board, depth + INCREMENT, HashMap::new()) );
+            best_score.insert(
+                *space,
+                -minimax(emulated_board, depth + INCREMENT, HashMap::new()),
+            );
         }
 
         analyse_board(best_score, depth)
@@ -26,7 +34,7 @@ fn minimax(board: Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 {
 
 fn score_scenarios(board: &Board, depth: i32) -> i32 {
     if is_game_tied(&board) {
-        return TIED
+        return TIED;
     } else {
         -MAX_SCORE / depth
     }
@@ -62,7 +70,14 @@ fn current_turn(depth: i32) -> bool {
 pub mod tests {
     #[cfg(test)]
     use super::*;
+    #[cfg(test)]
     use board::tests::set_up_board;
+
+    #[test]
+    fn chooses_the_top_left_corner_if_goes_first() {
+        let board: Board = set_up_board(3, vec![]);
+        assert_eq!(0, find_best_space(board));
+    }
 
     #[test]
     fn chooses_the_only_available_space() {
@@ -94,4 +109,3 @@ pub mod tests {
         assert_eq!(3, find_best_space(board));
     }
 }
-

@@ -8,7 +8,8 @@ pub const NUMBER_OF_ROWS: &str = "Select 3 or 4 rows to play";
 pub const GAME_TYPE: &str = "Select game type
 1 - Human vs Human
 2 - Human vs Computer
-3 = Computer vs Human";
+3 - Computer vs Human
+4 - Computer vs Computer";
 pub const SELECT_A_SPACE: &str = ", select a space";
 pub const WINNER: &str = " wins the game!";
 
@@ -35,7 +36,7 @@ pub fn ask_how_many_rows() -> i32 {
 }
 pub fn ask_player_type() -> i32 {
     let selection = ask(GAME_TYPE);
-    if selection == 1 || selection == 2 || selection == 3 {
+    if selection == 1 || selection == 2 || selection == 3 || selection == 4 {
         selection
     } else {
         ask_player_type()
@@ -143,7 +144,11 @@ mod tests {
     #[test]
     fn asks_user_to_select_game_type() {
         assert_eq!(
-            "Select game type\n1 - Human vs Human\n2 - Human vs Computer\n3 = Computer vs Human",
+            "Select game type
+1 - Human vs Human
+2 - Human vs Computer
+3 - Computer vs Human
+4 - Computer vs Computer",
             GAME_TYPE
         );
     }
