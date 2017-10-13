@@ -28,7 +28,7 @@ git@github.com:rust-tic-tac-toe/tic-tac-toe.git`
   Organization](https://doc.rust-lang.org/book/second-edition/ch11-03-test-organization.html)
   chapter of [The Rust Programming
   Language](https://doc.rust-lang.org/book/second-edition/); unit tests are
-  included in the source file they are testing, and integration tests are
-  separate, in the tests folder. There are no unit tests for `app_runner.rs`
+  included in the source file they are testing and integration tests are
+  separate in the tests folder. There are no unit tests for `app_runner.rs`
   as this code is tested by the integration tests. The functions called are
   tested in their relative source files.
