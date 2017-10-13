@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rust-tic-tac-toe/tic_tac_toe.svg?branch=master)](https://travis-ci.org/rust-tic-tac-toe/tic_tac_toe)
+[![Build Status](https://travis-ci.org/rust-tic-tac-toe/tic-tac-toe.svg?branch=master)](https://travis-ci.org/rust-tic-tac-toe/tic-tac-toe)
 # Rust Tic Tac Toe
 
 #### Prerequisites
