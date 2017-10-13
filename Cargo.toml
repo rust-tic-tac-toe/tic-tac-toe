@@ -3,4 +3,5 @@ name = "tic_tac_toe"
 version = "0.1.0"
 authors = ["Rust Developer"]
 
-[dependencies]
+[dev-dependencies]
+assert_cli = "0.5"
