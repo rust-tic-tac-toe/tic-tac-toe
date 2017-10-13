@@ -121,6 +121,7 @@ fn number_spaces(spaces: &[String]) -> Vec<String> {
 
 pub fn clear_screen() {
     print!("{}[2J", 27 as char);
+    print!("{}[2J", 27 as char);
 }
 
 #[cfg(test)]

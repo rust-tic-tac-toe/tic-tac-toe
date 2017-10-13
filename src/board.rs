@@ -34,12 +34,8 @@ impl Board {
         self.is_space_available(space) && self.is_space_in_bounds(space)
     }
 
-    fn is_space_available(&self, space: &i32) -> bool {
+    pub fn is_space_available(&self, space: &i32) -> bool {
         !self.spaces.contains(space)
-    }
-
-    pub fn is_empty(&self) -> bool {
-        self.spaces.is_empty()
     }
 
     fn is_space_in_bounds(&self, space: &i32) -> bool {
@@ -187,17 +183,6 @@ pub mod tests {
         assert_eq!(available_spaces, board.get_available_spaces());
     }
 
-    #[test]
-    fn an_empty_board_is_empty() {
-        let board = set_up_board(3, vec![]);
-        assert!(board.is_empty());
-    }
-
-    #[test]
-    fn a_board_with_moves_is_not_empty() {
-        let board = set_up_board(3, vec![0]);
-        assert!(!board.is_empty());
-    }
     #[test]
     fn convert_empty_board() {
         let board = set_up_board(3, vec![]);
