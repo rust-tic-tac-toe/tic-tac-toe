@@ -4,7 +4,6 @@ use board::split_into_rows;
 
 pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
-pub const NUMBER_OF_ROWS: &str = "Select 3 or 4 rows to play";
 pub const GAME_TYPE: &str = "Select game type
 1 - Human vs Human
 2 - Human vs Computer
@@ -26,14 +25,6 @@ pub fn ask(question: &str) -> i32 {
     }
 }
 
-pub fn ask_how_many_rows() -> i32 {
-    let selection = ask(NUMBER_OF_ROWS);
-    if selection == 3 || selection == 4 {
-        selection
-    } else {
-        ask_how_many_rows()
-    }
-}
 pub fn ask_player_type() -> i32 {
     let selection = ask(GAME_TYPE);
     if selection == 1 || selection == 2 || selection == 3 || selection == 4 {
@@ -121,7 +112,6 @@ fn number_spaces(spaces: &[String]) -> Vec<String> {
 
 pub fn clear_screen() {
     print!("{}[2J", 27 as char);
-    print!("{}[2J", 27 as char);
 }
 
 #[cfg(test)]
@@ -168,29 +158,6 @@ mod tests {
         let board: Board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
         let blank_board: String =
             " X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n"
-                .to_string();
-        assert_eq!(blank_board, format_board(&board));
-    }
-
-    #[test]
-    fn displays_an_empty_4_by_4_board() {
-        let board: Board = set_up_board(4, vec![]);
-        let blank_board: String =
-            " 1  | 2  | 3  | 4  \n-------------------\n 5  | 6  | 7  | 8  \n-------------------\n \
-             9  | 10 | 11 | 12 \n-------------------\n 13 | 14 | 15 | 16 \n"
-                .to_string();
-        assert_eq!(blank_board, format_board(&board));
-    }
-
-    #[test]
-    fn displays_a_full_4_by_4_board() {
-        let board: Board = set_up_board(
-            4,
-            vec![0, 15, 1, 14, 2, 3, 7, 13, 12, 4, 5, 6, 8, 9, 10, 11],
-        );
-        let blank_board: String =
-            " X  | X  | X  | O  \n-------------------\n O  | X  | O  | X  \n-------------------\n \
-             X  | O  | X  | O  \n-------------------\n X  | O  | O  | O  \n"
                 .to_string();
         assert_eq!(blank_board, format_board(&board));
     }

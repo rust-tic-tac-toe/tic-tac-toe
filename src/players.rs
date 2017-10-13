@@ -13,6 +13,7 @@ pub fn get_marker(player: &Players) -> &str {
     }
 }
 
+#[allow(unused)]
 pub fn choose_space(player: &Players, board: &Board) -> i32 {
     match *player {
         Players::Human { ref marker } => ask(&select_space(marker)) - OFFSET as i32,

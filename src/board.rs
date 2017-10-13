@@ -308,63 +308,6 @@ pub mod tests {
     }
 
     #[test]
-    fn get_columns_4x4() {
-        let rows: Vec<Vec<String>> = vec![
-            vec![
-                "X".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "X".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                "X".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                "O".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-            ],
-        ];
-        let columns: Vec<Vec<String>> = vec![
-            vec![
-                "X".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                " ".to_string(),
-                "X".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                "O".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                "X".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-            ],
-        ];
-        assert_eq!(columns, find_columns(&rows));
-    }
-
-    #[test]
     fn get_left_diagonal_3x3() {
         let rows: Vec<Vec<String>> = vec![
             vec!["X".to_string(), "X".to_string(), "O".to_string()],
@@ -376,43 +319,6 @@ pub mod tests {
     }
 
     #[test]
-    fn get_left_diagonal_4x4() {
-        let rows: Vec<Vec<String>> = vec![
-            vec![
-                "X".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "X".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                "X".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                "O".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-            ],
-        ];
-        let diagonal: Vec<String> = vec![
-            "X".to_string(),
-            " ".to_string(),
-            " ".to_string(),
-            "O".to_string(),
-        ];
-        assert_eq!(diagonal, find_left_diagonal(&rows));
-    }
-
-    #[test]
     fn get_right_diagonal_3x3() {
         let rows: Vec<Vec<String>> = vec![
             vec!["X".to_string(), "X".to_string(), "O".to_string()],
@@ -420,43 +326,6 @@ pub mod tests {
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
         let diagonal: Vec<String> = vec!["O".to_string(), "O".to_string(), "X".to_string()];
-        assert_eq!(diagonal, find_right_diagonal(&rows));
-    }
-
-    #[test]
-    fn get_right_diagonal_4x4() {
-        let rows: Vec<Vec<String>> = vec![
-            vec![
-                "X".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "X".to_string(),
-            ],
-            vec![
-                " ".to_string(),
-                "X".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-            ],
-            vec![
-                "O".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                "O".to_string(),
-            ],
-        ];
-        let diagonal: Vec<String> = vec![
-            " ".to_string(),
-            " ".to_string(),
-            "X".to_string(),
-            "O".to_string(),
-        ];
         assert_eq!(diagonal, find_right_diagonal(&rows));
     }
 
