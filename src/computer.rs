@@ -8,7 +8,7 @@ const MAX_SCORE: i32 = 1000;
 const INCREMENT: i32 = 1;
 const TOP_LEFT_CORNER: i32 = 0;
 
-pub fn find_best_space(board: Board) -> i32 {
+pub fn find_best_space(board: &Board) -> i32 {
     if board.is_empty() {
         TOP_LEFT_CORNER
     } else {
@@ -16,31 +16,31 @@ pub fn find_best_space(board: Board) -> i32 {
     }
 }
 
-fn minimax(board: Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 {
-    if is_game_over(&board) {
-        return score_scenarios(&board, depth);
+fn minimax(board: &Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 {
+    if is_game_over(board) {
+        score_scenarios(board, depth)
     } else {
-        for space in board.get_available_spaces().iter() {
+        for space in &board.get_available_spaces() {
             let emulated_board = board.clone().place_marker(*space);
             best_score.insert(
                 *space,
-                -minimax(emulated_board, depth + INCREMENT, HashMap::new()),
+                -minimax(&emulated_board, depth + INCREMENT, HashMap::new()),
             );
         }
 
-        analyse_board(best_score, depth)
+        analyse_board(&best_score, depth)
     }
 }
 
 fn score_scenarios(board: &Board, depth: i32) -> i32 {
-    if is_game_tied(&board) {
-        return TIED;
+    if is_game_tied(board) {
+        TIED
     } else {
         -MAX_SCORE / depth
     }
 }
 
-fn analyse_board(best_score: HashMap<i32, i32>, depth: i32) -> i32 {
+fn analyse_board(best_score: &HashMap<i32, i32>, depth: i32) -> i32 {
     let space_with_highest_score: (i32, i32) = find_highest_score(best_score);
     if current_turn(depth) {
         choose_best_space(space_with_highest_score)
@@ -49,7 +49,7 @@ fn analyse_board(best_score: HashMap<i32, i32>, depth: i32) -> i32 {
     }
 }
 
-fn find_highest_score(best_score: HashMap<i32, i32>) -> (i32, i32) {
+fn find_highest_score(best_score: &HashMap<i32, i32>) -> (i32, i32) {
     let mut scores_to_compare: Vec<(&i32, &i32)> = best_score.iter().collect();
     scores_to_compare.sort_by(|key, value| value.1.cmp(key.1));
     (*scores_to_compare[0].0, *scores_to_compare[0].1)
