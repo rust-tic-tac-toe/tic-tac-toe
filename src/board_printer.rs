@@ -4,7 +4,8 @@ use board_formatter::expand_board;
 use lines::split_board_into_rows;
 
 pub fn format_board(board: &Board) -> String {
-    let split_board = split_board_into_rows(&number_spaces(&expand_board(board)), board.get_size().abs());
+    let split_board =
+        split_board_into_rows(&number_spaces(&expand_board(board)), board.get_size().abs());
     let mut formatted_board: String = "".to_string();
     for (index, row) in split_board.iter().enumerate() {
         let formatted_row = format_row(&row.to_vec());
@@ -58,7 +59,7 @@ mod tests {
         let board: Board = set_up_board(3, vec![]);
         let blank_board: String =
             " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n"
-            .to_string();
+                .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
@@ -67,7 +68,7 @@ mod tests {
         let board: Board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
         let blank_board: String =
             " X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n"
-            .to_string();
+                .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
@@ -77,7 +78,7 @@ mod tests {
         assert_eq!(
             row,
             format_row(&vec!["1".to_string(), "2".to_string(), "3".to_string()])
-            );
+        );
     }
 
     #[test]
@@ -96,17 +97,17 @@ mod tests {
         assert_eq!(
             numbered_spaces,
             number_spaces(&vec![
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
-                          " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
+                " ".to_string(),
             ])
-            );
+        );
     }
 
 }

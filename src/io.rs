@@ -53,7 +53,7 @@ fn get_input() -> String {
 
 fn process_input<R>(mut reader: R) -> String
 where
-R: BufRead,
+    R: BufRead,
 {
     let mut input = String::new();
     reader.read_line(&mut input).expect("Unable to read");
@@ -101,8 +101,8 @@ mod tests {
 2 - Human vs Computer
 3 - Computer vs Human
 4 - Computer vs Computer",
-GAME_TYPE
-);
+            GAME_TYPE
+        );
     }
 
     #[test]
@@ -111,8 +111,8 @@ GAME_TYPE
             "Play again?
 1 - Yes
 2 - No",
-PLAY_AGAIN
-);
+            PLAY_AGAIN
+        );
     }
 
     #[test]

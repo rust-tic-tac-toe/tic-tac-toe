@@ -64,7 +64,10 @@ pub mod tests {
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-            assert_eq!(expanded_board, split_board_into_rows(&expand_board(&board), 3));
+        assert_eq!(
+            expanded_board,
+            split_board_into_rows(&expand_board(&board), 3)
+        );
     }
 
     #[test]
@@ -75,7 +78,10 @@ pub mod tests {
             vec![" ".to_string(), "O".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-            assert_eq!(expanded_board, split_board_into_rows(&expand_board(&board), 3));
+        assert_eq!(
+            expanded_board,
+            split_board_into_rows(&expand_board(&board), 3)
+        );
     }
 
     #[test]
@@ -86,7 +92,10 @@ pub mod tests {
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
-            assert_eq!(expanded_board, split_board_into_rows(&expand_board(&board), 3));
+        assert_eq!(
+            expanded_board,
+            split_board_into_rows(&expand_board(&board), 3)
+        );
     }
 
     #[test]
@@ -96,7 +105,7 @@ pub mod tests {
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-            assert_eq!(rows, find_columns(&rows));
+        assert_eq!(rows, find_columns(&rows));
     }
 
     #[test]
@@ -106,12 +115,12 @@ pub mod tests {
             vec![" ".to_string(), "O".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-            let columns: Vec<Vec<String>> = vec![
-                vec!["X".to_string(), " ".to_string(), " ".to_string()],
-                vec![" ".to_string(), "O".to_string(), " ".to_string()],
-                vec!["X".to_string(), " ".to_string(), " ".to_string()],
-            ];
-                assert_eq!(columns, find_columns(&rows));
+        let columns: Vec<Vec<String>> = vec![
+            vec!["X".to_string(), " ".to_string(), " ".to_string()],
+            vec![" ".to_string(), "O".to_string(), " ".to_string()],
+            vec!["X".to_string(), " ".to_string(), " ".to_string()],
+        ];
+        assert_eq!(columns, find_columns(&rows));
     }
 
     #[test]
@@ -121,12 +130,12 @@ pub mod tests {
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
-            let columns: Vec<Vec<String>> = vec![
-                vec!["X".to_string(), "O".to_string(), "X".to_string()],
-                vec!["X".to_string(), "O".to_string(), "O".to_string()],
-                vec!["O".to_string(), "X".to_string(), "X".to_string()],
-            ];
-                assert_eq!(columns, find_columns(&rows));
+        let columns: Vec<Vec<String>> = vec![
+            vec!["X".to_string(), "O".to_string(), "X".to_string()],
+            vec!["X".to_string(), "O".to_string(), "O".to_string()],
+            vec!["O".to_string(), "X".to_string(), "X".to_string()],
+        ];
+        assert_eq!(columns, find_columns(&rows));
     }
 
     #[test]
@@ -136,8 +145,8 @@ pub mod tests {
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
-            let diagonal: Vec<String> = vec!["X".to_string(), "O".to_string(), "X".to_string()];
-            assert_eq!(diagonal, find_left_diagonal(&rows));
+        let diagonal: Vec<String> = vec!["X".to_string(), "O".to_string(), "X".to_string()];
+        assert_eq!(diagonal, find_left_diagonal(&rows));
     }
 
     #[test]
@@ -147,8 +156,8 @@ pub mod tests {
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
-            let diagonal: Vec<String> = vec!["O".to_string(), "O".to_string(), "X".to_string()];
-            assert_eq!(diagonal, find_right_diagonal(&rows));
+        let diagonal: Vec<String> = vec!["O".to_string(), "O".to_string(), "X".to_string()];
+        assert_eq!(diagonal, find_right_diagonal(&rows));
     }
 
     #[test]
@@ -164,7 +173,7 @@ pub mod tests {
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
         ];
-            assert_eq!(winning_scenarios, find_all_lines(&board));
+        assert_eq!(winning_scenarios, find_all_lines(&board));
     }
 
 }

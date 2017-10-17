@@ -58,5 +58,5 @@ fn show_user_state_of_game(board: &Board) {
     let current_player_marker = find_current_player(board);
     clear_screen();
     display(&select_space(&current_player_marker));
-    display(&format_board(&board));
+    display(&format_board(board));
 }
