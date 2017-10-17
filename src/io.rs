@@ -12,6 +12,9 @@ pub const GAME_TYPE: &str = "Select game type
 4 - Computer vs Computer";
 pub const SELECT_A_SPACE: &str = ", select a space";
 pub const WINNER: &str = " wins the game!";
+pub const PLAY_AGAIN: &str = "Play again?
+1 - Yes
+2 - No";
 
 pub fn display(output: &str) {
     println!("{}", output);
@@ -35,6 +38,16 @@ pub fn ask_player_type() -> i32 {
     }
 }
 
+pub fn ask_play_again() -> i32 {
+    display(PLAY_AGAIN);
+    let selection = select_number();
+    if selection == 1 || selection == 2 {
+        selection
+    } else {
+        ask_play_again()
+    }
+}
+
 fn get_input() -> String {
     let stdio = io::stdin();
     let input = stdio.lock();
@@ -43,7 +56,7 @@ fn get_input() -> String {
 
 fn process_input<R>(mut reader: R) -> String
 where
-    R: BufRead,
+R: BufRead,
 {
     let mut input = String::new();
     reader.read_line(&mut input).expect("Unable to read");
@@ -109,7 +122,7 @@ fn number_spaces(spaces: &[String]) -> Vec<String> {
 }
 
 pub fn clear_screen() {
-   print!("{}{}", termion::clear::All, termion::cursor::Goto(1, 1));
+    print!("{}{}", termion::clear::All, termion::cursor::Goto(1, 1));
 }
 
 #[cfg(test)]
@@ -138,8 +151,18 @@ mod tests {
 2 - Human vs Computer
 3 - Computer vs Human
 4 - Computer vs Computer",
-            GAME_TYPE
-        );
+GAME_TYPE
+);
+    }
+
+    #[test]
+    fn asks_user_to_play_again() {
+        assert_eq!(
+            "Play again?
+1 - Yes
+2 - No",
+PLAY_AGAIN
+);
     }
 
     #[test]
@@ -147,7 +170,7 @@ mod tests {
         let board: Board = set_up_board(3, vec![]);
         let blank_board: String =
             " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n"
-                .to_string();
+            .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
@@ -156,7 +179,7 @@ mod tests {
         let board: Board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
         let blank_board: String =
             " X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n"
-                .to_string();
+            .to_string();
         assert_eq!(blank_board, format_board(&board));
     }
 
@@ -166,7 +189,7 @@ mod tests {
         assert_eq!(
             row,
             format_row(&vec!["1".to_string(), "2".to_string(), "3".to_string()])
-        );
+            );
     }
 
     #[test]
@@ -185,17 +208,17 @@ mod tests {
         assert_eq!(
             numbered_spaces,
             number_spaces(&vec![
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
+                          " ".to_string(),
             ])
-        );
+            );
     }
 
 

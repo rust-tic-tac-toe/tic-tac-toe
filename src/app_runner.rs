@@ -6,6 +6,7 @@ use game_types::*;
 
 const INVALID_VALUE: i32 = -1;
 const NUMBER_OF_ROWS: i32 = 3;
+const YES: i32 = 1;
 
 pub fn start() {
     let mut board = setup_board();
@@ -37,6 +38,9 @@ fn end_of_game(board: &Board) {
     clear_screen();
     display(&alert_winner(&find_winner(board)));
     display(&format_board(board));
+    if ask_play_again() == YES {
+        start()
+    }
 }
 
 fn select_a_space(board: &Board, players: &[Players]) -> i32 {

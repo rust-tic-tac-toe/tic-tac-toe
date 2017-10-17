@@ -7,7 +7,7 @@ mod integration {
     #[test]
     fn human_vs_human_x_wins() {
         assert_cli::Assert::main_binary()
-            .stdin("1\n1\n5\n2\n4\n3")
+            .stdin("1\n1\n5\n2\n4\n3\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
@@ -57,7 +57,7 @@ mod integration {
     #[test]
     fn human_vs_human_o_wins() {
         assert_cli::Assert::main_binary()
-            .stdin("1\n1\n5\n2\n4\n7\n6")
+            .stdin("1\n1\n5\n2\n4\n7\n6\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
@@ -112,7 +112,7 @@ mod integration {
     #[test]
     fn human_vs_human_nobody_wins() {
         assert_cli::Assert::main_binary()
-            .stdin("1\n1\n5\n2\n4\n7\n8\n6\n3\n9")
+            .stdin("1\n1\n5\n2\n4\n7\n8\n6\n3\n9\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
@@ -182,7 +182,7 @@ mod integration {
     #[test]
     fn computer_vs_computer() {
         assert_cli::Assert::main_binary()
-            .stdin("4")
+            .stdin("4\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
@@ -215,7 +215,7 @@ mod integration {
     #[test]
     fn human_vs_computer() {
         assert_cli::Assert::main_binary()
-            .stdin("2\n1\n2\n3\n4\n5\n6\n7\n8\n9")
+            .stdin("2\n1\n2\n3\n4\n5\n6\n7\n8\n9\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
@@ -248,7 +248,7 @@ mod integration {
     #[test]
     fn computer_vs_human() {
         assert_cli::Assert::main_binary()
-            .stdin("3\n5\n2\n3\n4\n6\n7\n8\n9")
+            .stdin("3\n5\n2\n3\n4\n6\n7\n8\n9\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
