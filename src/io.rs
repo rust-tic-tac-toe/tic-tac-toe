@@ -1,6 +1,5 @@
 use std::io::{self, BufRead};
-use board::Board;
-use board::split_into_rows;
+use board::*;
 
 pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
@@ -62,10 +61,7 @@ pub fn alert_winner(player: &str) -> String {
 }
 
 pub fn format_board(board: &Board) -> String {
-    let split_board = split_into_rows(
-        &number_spaces(&board.expand_board()),
-        board.get_size().abs(),
-    );
+    let split_board = split_into_rows(&number_spaces(&expand_board(board)), board.get_size().abs());
     let mut formatted_board: String = "".to_string();
     for (index, row) in split_board.iter().enumerate() {
         let formatted_row = format_row(&row.to_vec());

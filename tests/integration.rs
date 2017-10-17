@@ -13,21 +13,42 @@ mod integration {
             .stdout()
             .contains("Select game type")
             .stdout()
-            .contains("1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer")
+            .contains(
+                "1 - Human vs Human\n2 - Human vs Computer\n\
+                 3 - Computer vs Human\n4 - Computer vs Computer",
+            )
             .stdout()
             .contains("X, select a space")
             .stdout()
-            .contains(" 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | X  \n--------------\n O  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | X  \n--------------\n O  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
             .contains("X wins the game")
             .unwrap();
@@ -42,23 +63,47 @@ mod integration {
             .stdout()
             .contains("Select game type")
             .stdout()
-            .contains("1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer")
+            .contains(
+                "1 - Human vs Human\n2 - Human vs Computer\n\
+                 3 - Computer vs Human\n4 - Computer vs Computer",
+            )
             .stdout()
             .contains("X, select a space")
             .stdout()
-            .contains(" 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | 6  \n--------------\n X  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | 6  \n\
+                 --------------\n X  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | O  \n--------------\n X  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | O  \n\
+                 --------------\n X  | 8  | 9  \n",
+            )
             .stdout()
             .contains("O wins the game")
             .unwrap();
@@ -73,29 +118,62 @@ mod integration {
             .stdout()
             .contains("Select game type")
             .stdout()
-            .contains("1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer")
+            .contains(
+                "1 - Human vs Human\n2 - Human vs Computer\n\
+                 3 - Computer vs Human\n4 - Computer vs Computer",
+            )
             .stdout()
             .contains("X, select a space")
             .stdout()
-            .contains(" 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | 6  \n--------------\n X  | 8  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | 6  \n\
+                 --------------\n X  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | 6  \n--------------\n X  | O  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | 6  \n\
+                 --------------\n X  | O  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | 3  \n--------------\n O  | O  | X  \n--------------\n X  | O  | 9  \n")
+            .contains(
+                " X  | X  | 3  \n--------------\n O  | O  | X  \n\
+                 --------------\n X  | O  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | 9  \n")
+            .contains(
+                " X  | X  | O  \n--------------\n O  | O  | X  \n\
+                 --------------\n X  | O  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n")
+            .contains(
+                " X  | X  | O  \n--------------\n O  | O  | X  \n\
+                 --------------\n X  | O  | X  \n",
+            )
             .stdout()
             .contains("Nobody wins the game")
             .unwrap();
@@ -110,18 +188,29 @@ mod integration {
             .stdout()
             .contains("Select game type")
             .stdout()
-            .contains("1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer")
+            .contains(
+                "1 - Human vs Human\n2 - Human vs Computer\n\
+                 3 - Computer vs Human\n4 - Computer vs Computer",
+            )
             .stdout()
-            .contains(" 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
             .contains("Nobody wins the game")
             .unwrap();
     }
-
 
     #[test]
     fn human_vs_computer() {
@@ -132,13 +221,25 @@ mod integration {
             .stdout()
             .contains("Select game type")
             .stdout()
-            .contains("1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer")
+            .contains(
+                "1 - Human vs Human\n2 - Human vs Computer\n\
+                 3 - Computer vs Human\n4 - Computer vs Computer",
+            )
             .stdout()
-            .contains(" 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
             .contains(" wins the game")
             .unwrap();
@@ -153,13 +254,25 @@ mod integration {
             .stdout()
             .contains("Select game type")
             .stdout()
-            .contains("1 - Human vs Human\n2 - Human vs Computer\n3 - Computer vs Human\n4 - Computer vs Computer")
+            .contains(
+                "1 - Human vs Human\n2 - Human vs Computer\n\
+                 3 - Computer vs Human\n4 - Computer vs Computer",
+            )
             .stdout()
-            .contains(" 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
-            .contains(" X  | 2  | 3  \n--------------\n 4  | O  | 6  \n--------------\n 7  | 8  | 9  \n")
+            .contains(
+                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                 --------------\n 7  | 8  | 9  \n",
+            )
             .stdout()
             .contains(" wins the game")
             .unwrap();

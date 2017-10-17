@@ -43,7 +43,9 @@ fn end_of_game(board: &Board) {
 fn select_space(board: &Board, players: &[Players]) -> i32 {
     let current_player_marker = find_current_player(board);
     let mut space = INVALID_VALUE;
-    players.iter().filter(|player| get_marker(player) == current_player_marker)
-        .for_each(|player| space = choose_space(player, board) );
+    players
+        .iter()
+        .filter(|player| get_marker(player) == current_player_marker)
+        .for_each(|player| space = choose_space(player, board));
     space
 }

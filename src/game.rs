@@ -34,7 +34,7 @@ fn is_line_won_by(line: &[String], player: &str) -> bool {
 
 fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
     let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
-    let mut rows = split_into_rows(&board.expand_board(), board.get_size().abs());
+    let mut rows = split_into_rows(&expand_board(board), board.get_size().abs());
     let mut columns = find_columns(&rows);
     let left = find_left_diagonal(&rows);
     let right = find_right_diagonal(&rows);

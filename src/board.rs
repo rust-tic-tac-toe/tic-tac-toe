@@ -1,16 +1,16 @@
 const OFFSET: usize = 1;
 
-#[derive(Clone, Default)]
-pub struct Board {
-    size: i32,
-    spaces: Vec<i32>,
-}
-
 pub fn build_board(size: i32) -> Board {
     Board {
         size,
         spaces: Vec::new(),
     }
+}
+
+#[derive(Clone, Default)]
+pub struct Board {
+    size: i32,
+    spaces: Vec<i32>,
 }
 
 impl Board {
@@ -24,7 +24,7 @@ impl Board {
 
     pub fn place_marker(self, space: i32) -> Board {
         if self.is_move_valid(&space) {
-            self.create_new_board_with_move(space)
+            self.create_next_board(space)
         } else {
             self
         }
@@ -51,7 +51,7 @@ impl Board {
             .collect()
     }
 
-    fn create_new_board_with_move(self, space: i32) -> Board {
+    fn create_next_board(self, space: i32) -> Board {
         let mut updated_spaces = self.spaces;
         updated_spaces.push(space);
         Board {
@@ -59,20 +59,21 @@ impl Board {
             spaces: updated_spaces,
         }
     }
+}
 
-    pub fn expand_board(&self) -> Vec<String> {
-        let spaces = &self.spaces;
-        let number_of_spaces = self.size * self.size;
-        let mut expanded_board: Vec<String> = vec![" ".to_string(); number_of_spaces as usize];
-        for (index, space) in spaces.iter().enumerate() {
-            if index % 2 == 0 {
-                expanded_board[*space as usize] = "X".to_string();
-            } else {
-                expanded_board[*space as usize] = "O".to_string();
-            }
-        }
-        expanded_board
+pub fn expand_board(board: &Board) -> Vec<String> {
+    let spaces = board.get_spaces();
+    let number_of_spaces = board.get_size() * board.get_size();
+    let mut expanded_board: Vec<String> = vec![" ".to_string(); number_of_spaces as usize];
+    for (index, space) in spaces.iter().enumerate() {
+        let marker = if index % 2 == 0 {
+            "X".to_string()
+        } else {
+            "O".to_string()
+        };
+        expanded_board[*space as usize] = marker;
     }
+    expanded_board
 }
 
 pub fn split_into_rows(expanded_board: &[String], size: i32) -> Vec<Vec<String>> {
@@ -197,7 +198,7 @@ pub mod tests {
             " ".to_string(),
             " ".to_string(),
         ];
-        assert_eq!(expanded_board, board.expand_board());
+        assert_eq!(expanded_board, expand_board(&board));
     }
 
     #[test]
@@ -214,7 +215,7 @@ pub mod tests {
             " ".to_string(),
             " ".to_string(),
         ];
-        assert_eq!(expanded_board, board.expand_board());
+        assert_eq!(expanded_board, expand_board(&board));
     }
 
     #[test]
@@ -231,7 +232,7 @@ pub mod tests {
             "O".to_string(),
             "X".to_string(),
         ];
-        assert_eq!(expanded_board, board.expand_board());
+        assert_eq!(expanded_board, expand_board(&board));
     }
 
     #[test]
@@ -242,7 +243,7 @@ pub mod tests {
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-        assert_eq!(expanded_board, split_into_rows(&board.expand_board(), 3));
+        assert_eq!(expanded_board, split_into_rows(&expand_board(&board), 3));
     }
 
     #[test]
@@ -253,7 +254,7 @@ pub mod tests {
             vec![" ".to_string(), "O".to_string(), " ".to_string()],
             vec![" ".to_string(), " ".to_string(), " ".to_string()],
         ];
-        assert_eq!(expanded_board, split_into_rows(&board.expand_board(), 3));
+        assert_eq!(expanded_board, split_into_rows(&expand_board(&board), 3));
     }
 
     #[test]
@@ -264,7 +265,7 @@ pub mod tests {
             vec!["O".to_string(), "O".to_string(), "X".to_string()],
             vec!["X".to_string(), "O".to_string(), "X".to_string()],
         ];
-        assert_eq!(expanded_board, split_into_rows(&board.expand_board(), 3));
+        assert_eq!(expanded_board, split_into_rows(&expand_board(&board), 3));
     }
 
     #[test]
