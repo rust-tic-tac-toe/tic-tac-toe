@@ -1,6 +1,6 @@
 use board::*;
-use io::*;
-use computer::*;
+use computer::find_best_space;
+use human::ask_user_to_select_space;
 
 pub enum Players {
     Human { marker: String },
@@ -16,7 +16,7 @@ pub fn get_marker(player: &Players) -> &str {
 #[allow(unused)]
 pub fn choose_space(player: &Players, board: &Board) -> i32 {
     match *player {
-        Players::Human { ref marker } => ask(&select_space(marker)) - OFFSET as i32,
+        Players::Human { ref marker } => ask_user_to_select_space(marker),
         Players::Computer { ref marker } => find_best_space(board),
     }
 }

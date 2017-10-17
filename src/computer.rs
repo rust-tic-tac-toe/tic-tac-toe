@@ -29,7 +29,6 @@ fn minimax(board: &Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 
                 -minimax(&emulated_board, depth + INCREMENT, HashMap::new()),
             );
         }
-
         analyse_board(&best_score, depth)
     }
 }
