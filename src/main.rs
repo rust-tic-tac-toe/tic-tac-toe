@@ -1,13 +1,15 @@
 mod app_runner;
 mod io;
+mod board_printer;
 mod board;
 mod game;
-mod players;
 mod game_types;
+mod players;
 mod computer;
-
-use app_runner::start;
+mod human;
+mod board_formatter;
+mod lines;
 
 fn main() {
-    start();
+    app_runner::start();
 }

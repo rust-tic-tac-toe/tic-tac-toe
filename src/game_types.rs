@@ -1,4 +1,4 @@
-use players::*;
+use players::Players;
 
 pub fn create_players(choice: i32) -> Vec<Players> {
     match choice {
@@ -53,12 +53,14 @@ fn computer_vs_computer() -> Vec<Players> {
 pub mod tests {
     #[cfg(test)]
     use super::*;
+    #[cfg(test)]
+    use players;
     #[test]
     fn creates_two_players() {
         let players = create_players(1);
         let x = &players[0];
         let o = &players[1];
-        assert_eq!("X", get_marker(x));
-        assert_eq!("O", get_marker(o));
+        assert_eq!("X", players::get_marker(x));
+        assert_eq!("O", players::get_marker(o));
     }
 }

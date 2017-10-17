@@ -1,4 +1,5 @@
-use board::*;
+use lines;
+use board::Board;
 
 pub fn find_current_player(board: &Board) -> String {
     let current_player = if board.get_spaces().len() % 2 == 0 {
@@ -22,7 +23,7 @@ fn is_game_won(board: &Board) -> bool {
 }
 
 pub fn is_game_won_by(board: &Board, player: &str) -> bool {
-    let winning_scenarios = find_winning_scenarios(board);
+    let winning_scenarios = lines::find_all_lines(board);
     winning_scenarios
         .iter()
         .any(|line| is_line_won_by(line, player))
@@ -32,27 +33,15 @@ fn is_line_won_by(line: &[String], player: &str) -> bool {
     line.iter().all(|space| space == player)
 }
 
-fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
-    let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
-    let mut rows = split_into_rows(&board.expand_board(), board.get_size().abs());
-    let mut columns = find_columns(&rows);
-    let left = find_left_diagonal(&rows);
-    let right = find_right_diagonal(&rows);
-    winning_scenarios.append(&mut rows);
-    winning_scenarios.append(&mut columns);
-    winning_scenarios.push(left);
-    winning_scenarios.push(right);
-    winning_scenarios
-}
-
 pub fn find_winner(board: &Board) -> String {
-    if is_game_won_by(board, "X") {
-        "X".to_string()
+    let winner = if is_game_won_by(board, "X") {
+        "X"
     } else if is_game_won_by(board, "O") {
-        "O".to_string()
+        "O"
     } else {
-        "Nobody".to_string()
-    }
+        "Nobody"
+    };
+    winner.to_string()
 }
 
 pub mod tests {
@@ -82,22 +71,6 @@ pub mod tests {
     fn game_is_over_when_board_is_full() {
         let board: Board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
         assert!(is_game_over(&board));
-    }
-
-    #[test]
-    fn finds_winning_scenarios() {
-        let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        let winning_scenarios: Vec<Vec<String>> = vec![
-            vec!["X".to_string(), "X".to_string(), "O".to_string()],
-            vec!["O".to_string(), "O".to_string(), "X".to_string()],
-            vec!["X".to_string(), "O".to_string(), "X".to_string()],
-            vec!["X".to_string(), "O".to_string(), "X".to_string()],
-            vec!["X".to_string(), "O".to_string(), "O".to_string()],
-            vec!["O".to_string(), "X".to_string(), "X".to_string()],
-            vec!["X".to_string(), "O".to_string(), "X".to_string()],
-            vec!["O".to_string(), "O".to_string(), "X".to_string()],
-        ];
-        assert_eq!(winning_scenarios, find_winning_scenarios(&board));
     }
 
     #[test]

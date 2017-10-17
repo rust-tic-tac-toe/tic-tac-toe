@@ -1,6 +1,6 @@
+use game;
 use std::collections::HashMap;
-use board::*;
-use game::*;
+use board::Board;
 
 const INITIAL_DEPTH: i32 = 0;
 const TIED: i32 = 0;
@@ -19,7 +19,7 @@ pub fn find_best_space(board: &Board) -> i32 {
 }
 
 fn minimax(board: &Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 {
-    if is_game_over(board) {
+    if game::is_game_over(board) {
         score_scenarios(board, depth)
     } else {
         for space in &board.get_available_spaces() {
@@ -29,13 +29,12 @@ fn minimax(board: &Board, depth: i32, mut best_score: HashMap<i32, i32>) -> i32 
                 -minimax(&emulated_board, depth + INCREMENT, HashMap::new()),
             );
         }
-
         analyse_board(&best_score, depth)
     }
 }
 
 fn score_scenarios(board: &Board, depth: i32) -> i32 {
-    if is_game_tied(board) {
+    if game::is_game_tied(board) {
         TIED
     } else {
         -MAX_SCORE / depth

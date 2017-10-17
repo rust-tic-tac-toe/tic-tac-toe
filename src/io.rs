@@ -1,8 +1,6 @@
+extern crate termion;
 use std::io::{self, BufRead};
-use board::Board;
-use board::split_into_rows;
 
-pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
 pub const GAME_TYPE: &str = "Select game type
 1 - Human vs Human
@@ -11,26 +9,39 @@ pub const GAME_TYPE: &str = "Select game type
 4 - Computer vs Computer";
 pub const SELECT_A_SPACE: &str = ", select a space";
 pub const WINNER: &str = " wins the game!";
+pub const PLAY_AGAIN: &str = "Play again?
+1 - Yes
+2 - No";
 
 pub fn display(output: &str) {
     println!("{}", output);
 }
 
-pub fn ask(question: &str) -> i32 {
-    display(question);
+pub fn select_number() -> i32 {
     let input = get_input();
     match input.trim().parse::<i32>() {
         Ok(n) => n,
-        Err(_e) => ask(question),
+        Err(_e) => select_number(),
     }
 }
 
 pub fn ask_player_type() -> i32 {
-    let selection = ask(GAME_TYPE);
+    display(GAME_TYPE);
+    let selection = select_number();
     if selection == 1 || selection == 2 || selection == 3 || selection == 4 {
         selection
     } else {
         ask_player_type()
+    }
+}
+
+pub fn ask_play_again() -> i32 {
+    display(PLAY_AGAIN);
+    let selection = select_number();
+    if selection == 1 || selection == 2 {
+        selection
+    } else {
+        ask_play_again()
     }
 }
 
@@ -61,63 +72,13 @@ pub fn alert_winner(player: &str) -> String {
     winner
 }
 
-pub fn format_board(board: &Board) -> String {
-    let split_board = split_into_rows(
-        &number_spaces(&board.expand_board()),
-        board.get_size().abs(),
-    );
-    let mut formatted_board: String = "".to_string();
-    for (index, row) in split_board.iter().enumerate() {
-        let formatted_row = format_row(&row.to_vec());
-        let length = formatted_row.len();
-        formatted_board += &formatted_row;
-        if index < row.len() - OFFSET {
-            formatted_board += &"-".repeat(length - OFFSET);
-            formatted_board += "\n";
-        }
-    }
-    formatted_board
-}
-
-fn format_row(row: &[String]) -> String {
-    let mut formatted_row: String = "".to_string();
-    for (index, mark) in row.iter().enumerate() {
-        formatted_row.push_str(" ");
-        formatted_row.push_str(mark);
-        if mark.len() == OFFSET {
-            formatted_row.push_str(" ");
-        }
-        formatted_row.push_str(" ");
-        if index < row.len() - OFFSET {
-            formatted_row.push_str("|");
-        } else {
-            formatted_row.push_str("\n");
-        }
-    }
-    formatted_row
-}
-
-fn number_spaces(spaces: &[String]) -> Vec<String> {
-    let mut updated_spaces: Vec<String> = vec![" ".to_string(); spaces.len() as usize];
-    for (index, space) in spaces.iter().enumerate() {
-        if space == " " {
-            let number = index + OFFSET;
-            updated_spaces[index] = number.to_string();
-        } else {
-            updated_spaces[index] = space.to_string();
-        }
-    }
-    updated_spaces
-}
-
 pub fn clear_screen() {
-    print!("{}[2J", 27 as char);
+    print!("{}{}", termion::clear::All, termion::cursor::Goto(1, 1));
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use board::tests::set_up_board;
     use std::io::Cursor;
 
     #[test]
@@ -145,61 +106,14 @@ mod tests {
     }
 
     #[test]
-    fn displays_an_empty_3_by_3_board() {
-        let board: Board = set_up_board(3, vec![]);
-        let blank_board: String =
-            " 1  | 2  | 3  \n--------------\n 4  | 5  | 6  \n--------------\n 7  | 8  | 9  \n"
-                .to_string();
-        assert_eq!(blank_board, format_board(&board));
-    }
-
-    #[test]
-    fn displays_a_full_3_by_3_board() {
-        let board: Board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        let blank_board: String =
-            " X  | X  | O  \n--------------\n O  | O  | X  \n--------------\n X  | O  | X  \n"
-                .to_string();
-        assert_eq!(blank_board, format_board(&board));
-    }
-
-    #[test]
-    fn formats_a_row() {
-        let row: String = " 1  | 2  | 3  \n".to_string();
+    fn asks_user_to_play_again() {
         assert_eq!(
-            row,
-            format_row(&vec!["1".to_string(), "2".to_string(), "3".to_string()])
+            "Play again?
+1 - Yes
+2 - No",
+            PLAY_AGAIN
         );
     }
-
-    #[test]
-    fn formats_numbers() {
-        let numbered_spaces: Vec<String> = vec![
-            "1".to_string(),
-            "2".to_string(),
-            "3".to_string(),
-            "4".to_string(),
-            "5".to_string(),
-            "6".to_string(),
-            "7".to_string(),
-            "8".to_string(),
-            "9".to_string(),
-        ];
-        assert_eq!(
-            numbered_spaces,
-            number_spaces(&vec![
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-                " ".to_string(),
-            ])
-        );
-    }
-
 
     #[test]
     fn asks_user_to_play() {
