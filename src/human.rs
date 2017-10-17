@@ -1,6 +1,6 @@
-use board::OFFSET;
-use io::*;
+use io;
+use board;
 
 pub fn ask_user_to_select_space() -> i32 {
-    select_number() - OFFSET as i32
+    io::select_number() - board::OFFSET as i32
 }

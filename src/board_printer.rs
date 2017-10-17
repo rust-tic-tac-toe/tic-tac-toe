@@ -1,18 +1,20 @@
+use board;
+use board_formatter;
 use board::Board;
-use board::OFFSET;
-use board_formatter::expand_board;
-use lines::split_board_into_rows;
+use lines;
 
 pub fn format_board(board: &Board) -> String {
-    let split_board =
-        split_board_into_rows(&number_spaces(&expand_board(board)), board.get_size().abs());
+    let split_board = lines::split_board_into_rows(
+        &number_spaces(&board_formatter::expand_board(board)),
+        board.get_size().abs(),
+    );
     let mut formatted_board: String = "".to_string();
     for (index, row) in split_board.iter().enumerate() {
         let formatted_row = format_row(&row.to_vec());
         let length = formatted_row.len();
         formatted_board += &formatted_row;
-        if index < row.len() - OFFSET {
-            formatted_board += &"-".repeat(length - OFFSET);
+        if index < row.len() - board::OFFSET {
+            formatted_board += &"-".repeat(length - board::OFFSET);
             formatted_board += "\n";
         }
     }
@@ -24,11 +26,11 @@ fn format_row(row: &[String]) -> String {
     for (index, mark) in row.iter().enumerate() {
         formatted_row.push_str(" ");
         formatted_row.push_str(mark);
-        if mark.len() == OFFSET {
+        if mark.len() == board::OFFSET {
             formatted_row.push_str(" ");
         }
         formatted_row.push_str(" ");
-        if index < row.len() - OFFSET {
+        if index < row.len() - board::OFFSET {
             formatted_row.push_str("|");
         } else {
             formatted_row.push_str("\n");
@@ -41,7 +43,7 @@ fn number_spaces(spaces: &[String]) -> Vec<String> {
     let mut updated_spaces: Vec<String> = vec![" ".to_string(); spaces.len() as usize];
     for (index, space) in spaces.iter().enumerate() {
         if space == " " {
-            let number = index + OFFSET;
+            let number = index + board::OFFSET;
             updated_spaces[index] = number.to_string();
         } else {
             updated_spaces[index] = space.to_string();

@@ -10,8 +10,6 @@ mod human;
 mod board_formatter;
 mod lines;
 
-use app_runner::start;
-
 fn main() {
-    start();
+    app_runner::start();
 }

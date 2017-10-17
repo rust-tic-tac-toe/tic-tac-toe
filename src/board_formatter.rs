@@ -1,4 +1,4 @@
-use board::*;
+use board::Board;
 
 pub fn expand_board(board: &Board) -> Vec<String> {
     let spaces = board.get_spaces();

@@ -53,7 +53,9 @@ fn select_a_space(board: &Board, players: &[Players]) -> i32 {
     let mut space = INVALID_VALUE;
     players
         .iter()
-        .filter(|player| players::get_marker(player) == current_player_marker)
+        .filter(|player| {
+            players::get_marker(player) == current_player_marker
+        })
         .for_each(|player| space = players::choose_space(player, board));
     space
 }

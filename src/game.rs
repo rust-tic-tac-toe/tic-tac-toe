@@ -1,5 +1,5 @@
-use board::*;
-use lines::find_all_lines;
+use lines;
+use board::Board;
 
 pub fn find_current_player(board: &Board) -> String {
     let current_player = if board.get_spaces().len() % 2 == 0 {
@@ -23,7 +23,7 @@ fn is_game_won(board: &Board) -> bool {
 }
 
 pub fn is_game_won_by(board: &Board, player: &str) -> bool {
-    let winning_scenarios = find_all_lines(board);
+    let winning_scenarios = lines::find_all_lines(board);
     winning_scenarios
         .iter()
         .any(|line| is_line_won_by(line, player))
