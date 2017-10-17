@@ -1,4 +1,5 @@
 use board::*;
+use board_formatter::expand_board;
 
 pub fn find_current_player(board: &Board) -> String {
     let current_player = if board.get_spaces().len() % 2 == 0 {

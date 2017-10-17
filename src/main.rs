@@ -5,6 +5,7 @@ mod game;
 mod players;
 mod game_types;
 mod computer;
+mod board_formatter;
 
 use app_runner::start;
 

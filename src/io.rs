@@ -1,5 +1,6 @@
 use std::io::{self, BufRead};
 use board::*;
+use board_formatter::expand_board;
 
 pub const OFFSET: usize = 1;
 pub const TITLE: &str = "Tic Tac Toe";
