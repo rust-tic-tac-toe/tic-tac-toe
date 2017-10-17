@@ -1,3 +1,4 @@
+extern crate termion;
 use std::io::{self, BufRead};
 use board::*;
 use lines::split_board_into_rows;
@@ -108,7 +109,7 @@ fn number_spaces(spaces: &[String]) -> Vec<String> {
 }
 
 pub fn clear_screen() {
-    print!("{}[2J", 27 as char);
+   print!("{}{}", termion::clear::All, termion::cursor::Goto(1, 1));
 }
 
 #[cfg(test)]
