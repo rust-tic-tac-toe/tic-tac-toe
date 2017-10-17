@@ -16,17 +16,17 @@ pub fn display(output: &str) {
     println!("{}", output);
 }
 
-pub fn ask(question: &str) -> i32 {
-    display(question);
+pub fn select_number() -> i32 {
     let input = get_input();
     match input.trim().parse::<i32>() {
         Ok(n) => n,
-        Err(_e) => ask(question),
+        Err(_e) => select_number(),
     }
 }
 
 pub fn ask_player_type() -> i32 {
-    let selection = ask(GAME_TYPE);
+    display(GAME_TYPE);
+    let selection = select_number();
     if selection == 1 || selection == 2 || selection == 3 || selection == 4 {
         selection
     } else {

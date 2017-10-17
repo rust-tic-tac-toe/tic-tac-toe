@@ -2,12 +2,12 @@ mod app_runner;
 mod io;
 mod board;
 mod game;
-mod players;
 mod game_types;
+mod players;
 mod computer;
+mod human;
 mod board_formatter;
 mod lines;
-mod human;
 
 use app_runner::start;
 

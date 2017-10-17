@@ -28,19 +28,18 @@ fn setup_players() -> Vec<Players> {
 }
 
 fn single_turn(board: Board, players: &[Players]) -> Board {
-    clear_screen();
-    display(&format_board(&board));
-    let space = select_space(&board, players);
+    show_user_state_of_game(&board);
+    let space = select_a_space(&board, players);
     board.place_marker(space)
 }
 
 fn end_of_game(board: &Board) {
     clear_screen();
-    display(&format_board(board));
     display(&alert_winner(&find_winner(board)));
+    display(&format_board(board));
 }
 
-fn select_space(board: &Board, players: &[Players]) -> i32 {
+fn select_a_space(board: &Board, players: &[Players]) -> i32 {
     let current_player_marker = find_current_player(board);
     let mut space = INVALID_VALUE;
     players
@@ -48,4 +47,11 @@ fn select_space(board: &Board, players: &[Players]) -> i32 {
         .filter(|player| get_marker(player) == current_player_marker)
         .for_each(|player| space = choose_space(player, board));
     space
+}
+
+fn show_user_state_of_game(board: &Board) {
+    let current_player_marker = find_current_player(board);
+    clear_screen();
+    display(&select_space(&current_player_marker));
+    display(&format_board(&board));
 }
