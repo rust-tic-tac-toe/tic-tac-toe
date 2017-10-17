@@ -1,5 +1,3 @@
-pub const OFFSET: usize = 1;
-
 pub fn build_board(size: i32) -> Board {
     Board {
         size,
