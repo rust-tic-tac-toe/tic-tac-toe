@@ -28,12 +28,14 @@ fn setup_players() -> Vec<Players> {
 }
 
 fn single_turn(board: Board, players: &[Players]) -> Board {
+    clear_screen();
     display(&format_board(&board));
     let space = find_space(&board, players);
     board.place_marker(space)
 }
 
 fn end_of_game(board: &Board) {
+    clear_screen();
     display(&format_board(board));
     display(&alert_winner(&find_winner(board)));
 }
