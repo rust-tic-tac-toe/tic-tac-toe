@@ -1,4 +1,5 @@
 use board::*;
+use lines::*;
 use board_formatter::expand_board;
 
 pub fn find_current_player(board: &Board) -> String {
@@ -35,7 +36,7 @@ fn is_line_won_by(line: &[String], player: &str) -> bool {
 
 fn find_winning_scenarios(board: &Board) -> Vec<Vec<String>> {
     let mut winning_scenarios: Vec<Vec<String>> = Vec::new();
-    let mut rows = split_into_rows(&expand_board(board), board.get_size().abs());
+    let mut rows = split_board_into_rows(&expand_board(board), board.get_size().abs());
     let mut columns = find_columns(&rows);
     let left = find_left_diagonal(&rows);
     let right = find_right_diagonal(&rows);
