@@ -1,5 +1,6 @@
 mod app_runner;
 mod io;
+mod board_printer;
 mod board;
 mod game;
 mod game_types;

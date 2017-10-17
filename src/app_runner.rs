@@ -3,6 +3,7 @@ use board::*;
 use game::*;
 use players::*;
 use game_types::*;
+use board_printer::format_board;
 
 const INVALID_VALUE: i32 = -1;
 const NUMBER_OF_ROWS: i32 = 3;
