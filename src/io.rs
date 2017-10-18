@@ -68,8 +68,8 @@ pub fn select_space(player: &Marker) -> String {
     select
 }
 
-pub fn alert_winner(player: &str) -> String {
-    let mut winner: String = player.to_string();
+pub fn alert_winner(player: &Marker) -> String {
+    let mut winner: String = marker::inspect(player);
     winner += WINNER;
     winner
 }
@@ -126,7 +126,7 @@ mod tests {
     #[test]
     fn alerts_user_of_the_winner() {
         let winner: String = "X wins the game!".to_string();
-        assert_eq!(winner, alert_winner("X"));
+        assert_eq!(winner, alert_winner(&Marker::X));
     }
 
 }

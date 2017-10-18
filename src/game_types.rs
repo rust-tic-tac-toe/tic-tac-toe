@@ -11,43 +11,27 @@ pub fn create_players(choice: i32) -> Vec<Players> {
 }
 
 fn human_vs_human() -> Vec<Players> {
-    let x = Players::Human {
-        marker: Marker::X,
-    };
-    let o = Players::Human {
-        marker: Marker::O,
-    };
+    let x = Players::Human { marker: Marker::X };
+    let o = Players::Human { marker: Marker::O };
     vec![x, o]
 }
 
 fn human_vs_computer() -> Vec<Players> {
-    let x = Players::Human {
-        marker: Marker::X,
-    };
-    let o = Players::Computer {
-        marker: Marker::O,
-    };
+    let x = Players::Human { marker: Marker::X };
+    let o = Players::Computer { marker: Marker::O };
     vec![x, o]
 }
 
 
 fn computer_vs_human() -> Vec<Players> {
-    let x = Players::Computer {
-        marker: Marker::X,
-    };
-    let o = Players::Human {
-        marker: Marker::O,
-    };
+    let x = Players::Computer { marker: Marker::X };
+    let o = Players::Human { marker: Marker::O };
     vec![x, o]
 }
 
 fn computer_vs_computer() -> Vec<Players> {
-    let x = Players::Computer {
-        marker: Marker::X,
-    };
-    let o = Players::Computer {
-        marker: Marker::O,
-    };
+    let x = Players::Computer { marker: Marker::X };
+    let o = Players::Computer { marker: Marker::O };
     vec![x, o]
 }
 

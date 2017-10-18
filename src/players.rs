@@ -28,17 +28,13 @@ pub mod tests {
 
     #[test]
     fn creates_a_human_player() {
-        let player = Players::Human {
-            marker: Marker::X,
-        };
+        let player = Players::Human { marker: Marker::X };
         assert_eq!(&Marker::X, get_marker(&player));
     }
 
     #[test]
     fn creates_a_computer_player() {
-        let player = Players::Computer {
-            marker: Marker::O,
-        };
+        let player = Players::Computer { marker: Marker::O };
         assert_eq!(&Marker::O, get_marker(&player));
     }
 }
