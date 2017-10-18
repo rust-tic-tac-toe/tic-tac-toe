@@ -1,4 +1,6 @@
 use board::Board;
+use marker::Marker;
+use marker;
 
 pub fn expand_board(board: &Board) -> Vec<String> {
     let spaces = board.get_spaces();
@@ -6,9 +8,9 @@ pub fn expand_board(board: &Board) -> Vec<String> {
     let mut expanded_board: Vec<String> = vec![" ".to_string(); number_of_spaces as usize];
     for (index, space) in spaces.iter().enumerate() {
         let marker = if index % 2 == 0 {
-            "X".to_string()
+            marker::inspect(&Marker::X)
         } else {
-            "O".to_string()
+            marker::inspect(&Marker::O)
         };
         expanded_board[*space as usize] = marker;
     }

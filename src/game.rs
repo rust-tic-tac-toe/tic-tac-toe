@@ -1,13 +1,14 @@
 use lines;
+use marker;
+use marker::Marker;
 use board::Board;
 
-pub fn find_current_player(board: &Board) -> String {
-    let current_player = if board.get_spaces().len() % 2 == 0 {
-        "X"
+pub fn find_current_player(board: &Board) -> Marker {
+    if board.get_spaces().len() % 2 == 0 {
+        Marker::X
     } else {
-        "O"
-    };
-    current_player.to_string()
+        Marker::O
+    }
 }
 
 pub fn is_game_over(board: &Board) -> bool {
@@ -19,29 +20,28 @@ pub fn is_game_tied(board: &Board) -> bool {
 }
 
 fn is_game_won(board: &Board) -> bool {
-    is_game_won_by(board, "X") || is_game_won_by(board, "O")
+    is_game_won_by(board, &Marker::X) || is_game_won_by(board, &Marker::O)
 }
 
-pub fn is_game_won_by(board: &Board, player: &str) -> bool {
+pub fn is_game_won_by(board: &Board, player: &Marker) -> bool {
     let winning_scenarios = lines::find_all_lines(board);
     winning_scenarios
         .iter()
         .any(|line| is_line_won_by(line, player))
 }
 
-fn is_line_won_by(line: &[String], player: &str) -> bool {
-    line.iter().all(|space| space == player)
+fn is_line_won_by(line: &[String], player: &Marker) -> bool {
+    line.iter().all(|space| space == &marker::inspect(player))
 }
 
-pub fn find_winner(board: &Board) -> String {
-    let winner = if is_game_won_by(board, "X") {
-        "X"
-    } else if is_game_won_by(board, "O") {
-        "O"
+pub fn find_winner(board: &Board) -> Marker {
+    if is_game_won_by(board, &Marker::X) {
+        Marker::X
+    } else if is_game_won_by(board, &Marker::O) {
+        Marker::O
     } else {
-        "Nobody"
-    };
-    winner.to_string()
+        Marker::NA
+    }
 }
 
 pub mod tests {
@@ -52,13 +52,13 @@ pub mod tests {
     #[test]
     fn x_is_current_player_at_start_of_game() {
         let board: Board = set_up_board(3, vec![]);
-        assert_eq!("X", find_current_player(&board));
+        assert_eq!(Marker::X, find_current_player(&board));
     }
 
     #[test]
     fn o_is_current_player_after_one_move() {
         let board: Board = set_up_board(3, vec![0]);
-        assert_eq!("O", find_current_player(&board));
+        assert_eq!(Marker::O, find_current_player(&board));
     }
 
     #[test]
@@ -124,30 +124,30 @@ pub mod tests {
     #[test]
     fn check_line_won_by_x() {
         let line: Vec<String> = vec!["X".to_string(), "X".to_string(), "X".to_string()];
-        assert!(is_line_won_by(&line, "X"));
+        assert!(is_line_won_by(&line, &Marker::X));
     }
 
     #[test]
     fn check_row_not_won_by_o() {
         let line: Vec<String> = vec!["O".to_string(), " ".to_string(), "X".to_string()];
-        assert!(!is_line_won_by(&line, "O"));
+        assert!(!is_line_won_by(&line, &Marker::O));
     }
 
     #[test]
     fn find_winner_when_nobody_has_won() {
         let board = set_up_board(3, vec![0, 4, 8, 2, 6, 7, 1, 3, 5]);
-        assert_eq!("Nobody".to_string(), find_winner(&board));
+        assert_eq!(Marker::NA, find_winner(&board));
     }
 
     #[test]
     fn find_winner_when_x_has_won() {
         let board = set_up_board(3, vec![0, 4, 8, 2, 6, 3, 7]);
-        assert_eq!("X".to_string(), find_winner(&board));
+        assert_eq!(Marker::X, find_winner(&board));
     }
 
     #[test]
     fn find_winner_when_o_has_won() {
         let board = set_up_board(3, vec![0, 8, 4, 7, 2, 6]);
-        assert_eq!("O".to_string(), find_winner(&board));
+        assert_eq!(Marker::O, find_winner(&board));
     }
 }
