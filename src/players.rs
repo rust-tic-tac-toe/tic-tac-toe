@@ -1,13 +1,14 @@
 use computer;
 use human;
+use marker::Marker;
 use board::Board;
 
 pub enum Players {
-    Human { marker: String },
-    Computer { marker: String },
+    Human { marker: Marker },
+    Computer { marker: Marker },
 }
 
-pub fn get_marker(player: &Players) -> &str {
+pub fn get_marker(player: &Players) -> &Marker {
     match *player {
         Players::Human { ref marker } | Players::Computer { ref marker } => marker,
     }
@@ -16,27 +17,24 @@ pub fn get_marker(player: &Players) -> &str {
 #[allow(unused)]
 pub fn choose_space(player: &Players, board: &Board) -> i32 {
     match *player {
-        Players::Human { ref marker } => human::ask_user_to_select_space(),
-        Players::Computer { ref marker } => computer::find_best_space(board),
+        Players::Human { ref marker } => human::find_space(),
+        Players::Computer { ref marker } => computer::find_space(board),
     }
 }
 
 pub mod tests {
     #[cfg(test)]
     use super::*;
+
     #[test]
     fn creates_a_human_player() {
-        let player = Players::Human {
-            marker: "X".to_string(),
-        };
-        assert_eq!("X", get_marker(&player));
+        let player = Players::Human { marker: Marker::X };
+        assert_eq!(&Marker::X, get_marker(&player));
     }
 
     #[test]
     fn creates_a_computer_player() {
-        let player = Players::Computer {
-            marker: "O".to_string(),
-        };
-        assert_eq!("O", get_marker(&player));
+        let player = Players::Computer { marker: Marker::O };
+        assert_eq!(&Marker::O, get_marker(&player));
     }
 }

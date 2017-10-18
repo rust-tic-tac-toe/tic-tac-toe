@@ -1,4 +1,5 @@
 use players::Players;
+use marker::Marker;
 
 pub fn create_players(choice: i32) -> Vec<Players> {
     match choice {
@@ -10,43 +11,27 @@ pub fn create_players(choice: i32) -> Vec<Players> {
 }
 
 fn human_vs_human() -> Vec<Players> {
-    let x = Players::Human {
-        marker: "X".to_string(),
-    };
-    let o = Players::Human {
-        marker: "O".to_string(),
-    };
+    let x = Players::Human { marker: Marker::X };
+    let o = Players::Human { marker: Marker::O };
     vec![x, o]
 }
 
 fn human_vs_computer() -> Vec<Players> {
-    let x = Players::Human {
-        marker: "X".to_string(),
-    };
-    let o = Players::Computer {
-        marker: "O".to_string(),
-    };
+    let x = Players::Human { marker: Marker::X };
+    let o = Players::Computer { marker: Marker::O };
     vec![x, o]
 }
 
 
 fn computer_vs_human() -> Vec<Players> {
-    let x = Players::Computer {
-        marker: "X".to_string(),
-    };
-    let o = Players::Human {
-        marker: "O".to_string(),
-    };
+    let x = Players::Computer { marker: Marker::X };
+    let o = Players::Human { marker: Marker::O };
     vec![x, o]
 }
 
 fn computer_vs_computer() -> Vec<Players> {
-    let x = Players::Computer {
-        marker: "X".to_string(),
-    };
-    let o = Players::Computer {
-        marker: "O".to_string(),
-    };
+    let x = Players::Computer { marker: Marker::X };
+    let o = Players::Computer { marker: Marker::O };
     vec![x, o]
 }
 
@@ -60,7 +45,7 @@ pub mod tests {
         let players = create_players(1);
         let x = &players[0];
         let o = &players[1];
-        assert_eq!("X", players::get_marker(x));
-        assert_eq!("O", players::get_marker(o));
+        assert_eq!(&Marker::X, players::get_marker(x));
+        assert_eq!(&Marker::O, players::get_marker(o));
     }
 }
