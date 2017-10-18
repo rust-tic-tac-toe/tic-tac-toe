@@ -13,7 +13,7 @@ The computer player uses the [minimax algorithm](https://en.wikipedia.org/wiki/M
 to select the best space.
 
 #### Prerequisites
-1. Install Rust by following [these instructions](https://www.rust-lang.org/en-US/install.html)
+1. Install Rust by following [these instructions](https://www.rust-lang.org/en-US/install.htm), followed by the instructions in your terminal. 
 
 #### Running instructions
 1. In your home folder, clone the repository `$ git clone
