@@ -55,7 +55,7 @@ fn select_a_space(board: &Board, players: &[Players]) -> i32 {
     players
         .iter()
         .filter(|player| {
-            marker::inspect(&players::get_marker(player)) == marker::inspect(&current_player_marker)
+            marker::inspect(players::get_marker(player)) == marker::inspect(&current_player_marker)
         })
         .for_each(|player| space = players::choose_space(player, board));
     space
