@@ -3,6 +3,7 @@ use board;
 use game;
 use players;
 use game_types;
+use marker;
 use io::display;
 use io::clear_screen;
 use board::Board;
@@ -54,7 +55,7 @@ fn select_a_space(board: &Board, players: &[Players]) -> i32 {
     players
         .iter()
         .filter(|player| {
-            players::get_marker(player) == current_player_marker
+            marker::inspect(&players::get_marker(player)) == marker::inspect(&current_player_marker)
         })
         .for_each(|player| space = players::choose_space(player, board));
     space

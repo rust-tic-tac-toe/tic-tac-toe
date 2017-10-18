@@ -4,7 +4,7 @@ mod board_printer;
 mod board;
 mod game;
 mod game_types;
-mod markers;
+mod marker;
 mod players;
 mod computer;
 mod human;

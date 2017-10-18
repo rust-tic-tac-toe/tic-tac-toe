@@ -1,4 +1,6 @@
 extern crate termion;
+use marker;
+use marker::Marker;
 use std::io::{self, BufRead};
 
 pub const TITLE: &str = "Tic Tac Toe";
@@ -60,8 +62,8 @@ where
     input
 }
 
-pub fn select_space(player: &str) -> String {
-    let mut select: String = player.to_string();
+pub fn select_space(player: &Marker) -> String {
+    let mut select: String = marker::inspect(player);
     select += SELECT_A_SPACE;
     select
 }
@@ -118,7 +120,7 @@ mod tests {
     #[test]
     fn asks_user_to_play() {
         let turn: String = "X, select a space".to_string();
-        assert_eq!(turn, select_space("X"));
+        assert_eq!(turn, select_space(&Marker::X));
     }
 
     #[test]
