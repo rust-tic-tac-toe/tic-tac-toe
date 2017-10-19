@@ -199,12 +199,12 @@ mod integration {
             )
             .stdout()
             .contains(
-                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                " 1  | 2  | 3  \n--------------\n 4  | X  | 6  \n\
                  --------------\n 7  | 8  | 9  \n",
             )
             .stdout()
             .contains(
-                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                " O  | 2  | 3  \n--------------\n 4  | X  | 6  \n\
                  --------------\n 7  | 8  | 9  \n",
             )
             .stdout()
@@ -248,7 +248,7 @@ mod integration {
     #[test]
     fn computer_vs_human() {
         assert_cli::Assert::main_binary()
-            .stdin("3\n5\n2\n3\n4\n6\n7\n8\n9\n2")
+            .stdin("3\n1\n2\n3\n4\n6\n7\n8\n9\n2")
             .stdout()
             .contains("Tic Tac Toe")
             .stdout()
@@ -265,12 +265,12 @@ mod integration {
             )
             .stdout()
             .contains(
-                " X  | 2  | 3  \n--------------\n 4  | 5  | 6  \n\
+                " 1  | 2  | 3  \n--------------\n 4  | X  | 6  \n\
                  --------------\n 7  | 8  | 9  \n",
             )
             .stdout()
             .contains(
-                " X  | 2  | 3  \n--------------\n 4  | O  | 6  \n\
+                " O  | 2  | 3  \n--------------\n 4  | X  | 6  \n\
                  --------------\n 7  | 8  | 9  \n",
             )
             .stdout()
