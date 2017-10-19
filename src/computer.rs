@@ -7,8 +7,8 @@ const TIED: i32 = 0;
 const MAX_SCORE: i32 = 1000;
 const INCREMENT: i32 = 1;
 const EARLY_STAGES_OF_GAME: usize = 1;
-const FIRST_MOVE: i32 = 0;
-const SECOND_MOVE: i32 = 4;
+const FIRST_MOVE: i32 = 4;
+const SECOND_MOVE: i32 = 0;
 
 pub fn find_space(board: &Board) -> i32 {
     if is_game_in_early_stages(board) {
@@ -105,15 +105,21 @@ pub mod tests {
     }
 
     #[test]
-    fn chooses_the_top_left_corner_if_goes_first() {
+    fn chooses_the_middle_if_goes_first() {
         let board: Board = set_up_board(3, vec![]);
-        assert_eq!(0, find_space(&board));
+        assert_eq!(4, find_space(&board));
     }
 
     #[test]
-    fn chooses_the_middle_if_goes_second() {
+    fn chooses_the_middle_if_it_is_free_and_goes_second() {
         let board: Board = set_up_board(3, vec![0]);
         assert_eq!(4, find_space(&board));
+    }
+
+    #[test]
+    fn chooses_the_top_left_if_middle_is_taken() {
+        let board: Board = set_up_board(3, vec![4]);
+        assert_eq!(0, find_space(&board));
     }
 
     #[test]
