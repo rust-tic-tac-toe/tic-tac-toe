@@ -7,4 +7,5 @@ authors = ["Rust Developer"]
 termion = "*"
 
 [dev-dependencies]
+assert_ne = "0.3.0"
 assert_cli = "0.5"

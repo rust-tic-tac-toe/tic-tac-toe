@@ -129,6 +129,62 @@ pub mod tests {
     }
 
     #[test]
+    fn doesnt_play_in_a_space_where_x_can_win_when_starting_in_top_left_corner() {
+        let board: Board = set_up_board(3, vec![0, 4, 8]);
+        assert_ne!(2, find_space(&board));
+        assert_ne!(6, find_space(&board));
+    }
+
+    #[test]
+    fn doesnt_play_in_a_space_where_x_can_win_when_starting_in_top_right_corner() {
+        let board: Board = set_up_board(3, vec![2, 4, 6]);
+        assert_ne!(0, find_space(&board));
+        assert_ne!(8, find_space(&board));
+    }
+
+    #[test]
+    fn doesnt_play_in_a_space_where_x_can_win_when_starting_in_bottom_right_corner() {
+        let board: Board = set_up_board(3, vec![8, 4, 0]);
+        assert_ne!(2, find_space(&board));
+        assert_ne!(6, find_space(&board));
+    }
+
+    #[test]
+    fn doesnt_play_in_a_space_where_x_can_win_when_starting_in_bottom_left_corner() {
+        let board: Board = set_up_board(3, vec![6, 4, 2]);
+        assert_ne!(0, find_space(&board));
+        assert_ne!(8, find_space(&board));
+    }
+
+    #[test]
+    fn computer_leaves_game_unwinnable_after_top_left_followed_by_right_side_middle() {
+        let board: Board = set_up_board(3, vec![0, 4, 5]);
+        assert_ne!(3, find_space(&board));
+        assert_ne!(6, find_space(&board));
+    }
+
+    #[test]
+    fn computer_leaves_game_unwinnable_after_top_right_followed_by_left_side_middle() {
+        let board: Board = set_up_board(3, vec![2, 4, 3]);
+        assert_ne!(5, find_space(&board));
+        assert_ne!(8, find_space(&board));
+    }
+
+    #[test]
+    fn computer_leaves_game_unwinnable_after_bottom_left_followed_by_top_middle() {
+        let board: Board = set_up_board(3, vec![6, 4, 1]);
+        assert_ne!(7, find_space(&board));
+        assert_ne!(8, find_space(&board));
+    }
+
+    #[test]
+    fn computer_leaves_game_unwinnable_after_bottom_right_followed_by_left_middle() {
+        let board: Board = set_up_board(3, vec![8, 4, 3]);
+        assert_ne!(2, find_space(&board));
+        assert_ne!(5, find_space(&board));
+    }
+
+    #[test]
     fn chooses_the_only_available_space() {
         let board: Board = set_up_board(3, vec![0, 1, 2, 3, 4, 8, 5, 6]);
         assert_eq!(7, find_space(&board));
@@ -137,6 +193,12 @@ pub mod tests {
     #[test]
     fn chooses_the_winning_space() {
         let board: Board = set_up_board(3, vec![0, 1, 2, 3, 4, 8]);
+        assert_eq!(6, find_space(&board));
+    }
+
+    #[test]
+    fn chooses_a_win_over_a_block() {
+        let board: Board = set_up_board(3, vec![8, 4, 7]);
         assert_eq!(6, find_space(&board));
     }
 
@@ -157,4 +219,5 @@ pub mod tests {
         let board: Board = set_up_board(3, vec![0, 8, 6]);
         assert_eq!(3, find_space(&board));
     }
+
 }

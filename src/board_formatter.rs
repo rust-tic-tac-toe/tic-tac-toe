@@ -13,11 +13,11 @@ pub fn expand_board(board: &Board) -> Vec<String> {
 }
 
 fn set_marker(index: usize) -> Marker {
-        if is_even(index) {
-            Marker::X
-        } else {
-            Marker::O
-        }
+    if is_even(index) {
+        Marker::X
+    } else {
+        Marker::O
+    }
 }
 
 fn is_even(index: usize) -> bool {
